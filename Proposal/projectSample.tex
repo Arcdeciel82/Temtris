@@ -147,11 +147,11 @@
 
 % received ..."  text while in non-compsoc journals this is reversed. Sigh.
 
-\author{Curt Lynch && Hunter Johnson}
+\author{Curt Lynch and Hunter Johnson}
 
 \IEEEtitleabstractindextext{%
 \begin{abstract}
-This will serve as the documentation of our CSCI 352 project Temtris.
+Temtris is a Tetris-like we are developing as part of our CSCI352 class.
 \end{abstract}
 }
 
@@ -164,15 +164,12 @@ This will serve as the documentation of our CSCI 352 project Temtris.
 
 \section{Introduction}
 
-Temtris is a wpf application that we aim to be Tetris clone. That is, it is a game where you try to fit rows of blocks together at an ever increasing pace until the screen inevitably fills and you lose.
+Temtris is a wpf application that we aim to be Tetris clone. That is, it is a game where you try to fit rows of blocks together at an ever increasing pace until the screen inevitably fills causing game over. A score is computed based on how efficiently you clear the board as the game progresses, with more points being awarded for streaks of row clears and tetris row clears.
 
-We are making Temtris as a duo as part part of our CSCI 352 class. That being the case, we still want Temtris to be a fun and interesting addition to the world of Tetris.
-
-Should you need to cite anything, use the \emph{cite} keyword, and refer to something from your bibliography.  For example, this was put together with the help of a \LaTeX guide\cite{IEEEhowto:kopka}.
-Make sure that by the end of your introduction the reader knows what your project is and why you are doing it.
+We are making Temtris as a duo as part part of our CSCI 352 class. That being the case, we still want Temtris to be a fun and interesting for anyone looking to play a game.
 
 \subsection{Background}
-In this section, give a brief background to any concepts the reader may need to know to make it through your paper.   Are there any specific terms the reader needs to be familiar with?
+A tetrimino is one of the 7 classic Tetris shapes; these include O, I, T, L, J, S, and Z shapes. Each tetrimino is made up of four squares called mino(s). The matrix is the space where the Tetris game is played. A 'line clear' happens when a horizontal row is completely filled causing it to be removed from the matrix. Lock down is when a tetrimino is locked into its current position and is no longer controllable.
 
 Also, consider going into your personal connection with this project -- why did you decide to do it?
 
@@ -180,25 +177,21 @@ Also, consider going into your personal connection with this project -- why did 
 Temtris is a great way to improve our skills and better prepare us for working on more impactful projects in the future.
 
 \subsection{Challenges}
-This is the first moderately sized project as well as the first time we've really used a ui framework. I honestly expect more fighting with wpf than actual issues with game logic.
+This is the first moderately sized project either of us has attempted. This is also our first real foray into wpf and c\# so there are some growing pains there as well. As for the project itself I suspect getting the movement and rotations to feel like a proper Tetris game will take much more fine tuning than we have needed to use in the past.
 
 \section{Scope}
 Our initial goal is to implement the following typical parts of a Tetris-like:
-Have controllable game pieces that fall into place.
-Have rows that disappear and collapse when they fill up.
-Keep score or track time in some way.
-Display the next two pieces to spawn and allow the player to swap them.
+Implement a main menu with access to settings and game modes.
+Have controllable tetriminos that fall into place in the matrix.
+Implement all 7 tetrimino variants.
+Have rows that disappear when they fill up i.e. line clears.
+Keep score or track how well the player does in some way.
+Display the next piece to spawn.
+Play background music and have sound effects for row clears, player actions, etc.
 
 For stretch goals we would like to add the following:
-Multiplayer? Have at least two clients with a competitive game mode over LAN or just sharing a keyboard.
+Implement multiplayer? Have at least two clients with a competitive game mode over LAN or just sharing a keyboard.
 Have different power-ups possibly earned by removing a certain amount of one color from the board.
-
-
-This section is a bit tricksy.  You are going to do your best to set up ground rules:  How will you know when your project is done?
-
-If you were doing this under contract for a company, this would be your checklist to make sure you get paid.  We will be going into this in more detail over time, but you should start planning your major goals of the project as soon as possible.
-
-For every sub(sub)section below, make sure to mark which items are basic goals (project won't be done without it) and which ones are stretch goals (it would be really cool to do...).  We will be meeting one-on-one to help identify which goals go where.
 
 \subsection{Requirements}
 As part of fleshing out the scope of your requirements, you'll also need to keep in mind both your functional and non-functional requirements.  These should be listed, and explained in detail as necessary.  Use this area to explain how you gathered these requirements.
