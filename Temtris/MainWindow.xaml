@@ -5,8 +5,48 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Temtris"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        WindowState="Maximized"
+        Title="MainWindow" Height="1080" Width="1920">
+    <Grid Name="MainMenu_Grid" ShowGridLines="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="54"/>
+            <RowDefinition Height="54"/>
+            <RowDefinition Height="54"/>
+            <RowDefinition Height="54"/>
+            <RowDefinition Height="54"/>
+            <RowDefinition Height="54"/>
+            <RowDefinition Height="54"/>
+            <RowDefinition Height="54"/>
+            <RowDefinition Height="54"/>
+            <RowDefinition Height="54"/>
+            <RowDefinition Height="54"/>
+            <RowDefinition Height="54"/>
+            <RowDefinition Height="54"/>
+            <RowDefinition Height="54"/>
+            <RowDefinition Height="54"/>
+            <RowDefinition Height="54"/>
+            <RowDefinition Height="54"/>
+            <RowDefinition Height="54"/>
+            <RowDefinition Height="54"/>
+            <RowDefinition Height="54"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="690"/>
+            <ColumnDefinition Width="54"/>
+            <ColumnDefinition Width="54"/>
+            <ColumnDefinition Width="54"/>
+            <ColumnDefinition Width="54"/>
+            <ColumnDefinition Width="54"/>
+            <ColumnDefinition Width="54"/>
+            <ColumnDefinition Width="54"/>
+            <ColumnDefinition Width="54"/>
+            <ColumnDefinition Width="54"/>
+            <ColumnDefinition Width="54"/>
+            <ColumnDefinition Width="690"/>
+        </Grid.ColumnDefinitions>
+        <Rectangle x:Name="Left_Side"  Grid.Row="0" Grid.Column="0"  Grid.RowSpan="20" Stroke="Black" Fill="#FF08003E" Height="1080"/>
+        <Rectangle x:Name="Right_Side" Grid.Row="0" Grid.Column="11" Grid.RowSpan="20" Stroke="Black" Fill="#FF08003E" Height="1080"/>
+        <Rectangle x:Name="Stretcher"  Grid.Row="20" Grid.Column="1"  Grid.ColumnSpan="10" Width="540"/>
+        <Button x:Name="Test" Grid.Row="0" Grid.Column="1" Height="54"  Content="t" VerticalAlignment="Top" HorizontalAlignment="Left" Width="54" Margin="0,0,0,0" Click="TestButton_Click"/>
     </Grid>
 </Window>
