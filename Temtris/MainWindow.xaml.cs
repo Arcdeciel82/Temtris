@@ -31,27 +31,45 @@ namespace Temtris
         {
             InitializeComponent();
         }
-        private bool[,] blocks = new bool[25, 15];
+        private bool[,] blocks = new bool[20, 10];
         private int test_gg = 0;
+        private List <mino> inactive = new List<mino>();
         private void TestButton_Click(object sender, RoutedEventArgs e)
         {
+            List <mino> Poly = new List <mino>();
             SolidColorBrush brush = new SolidColorBrush(Color.FromArgb(255, 0, 100, 0));
-            Rectangle temp = new Rectangle();
-            Grid.SetRow(temp, 0);
-            Grid.SetColumn(temp, 4);
-            temp.Width = 54;
-            temp.Height = 54;
-            temp.Fill = brush;
-            temp.StrokeThickness = 5;
-            temp.Stroke = brush;
             if (test_gg == 0)
             {
                 createGameBoard();
                 test_gg++;
             }
-            GameGrid.Children.Add(temp);
-            Movement(temp);
+            mino one = new mino(4,1);
+            Poly.Add(one);
+            mino two = new mino(5,1);
+            Poly.Add(two);
+            mino three = new mino(5,2);
+            Poly.Add(three);
+            mino four = new mino(6,2);
+            Poly.Add(four);
+            for(int i = 0; i < 4; i++)
+            {
+                Rectangle temp = new Rectangle();
+                temp.Width = 54;
+                temp.Height = 54;
+                temp.StrokeThickness = 5;
+                temp.Fill = brush;
+                temp.Stroke = brush;
+                Grid.SetColumn(temp, Poly[i].pos.x);
+                Grid.SetRow(temp, Poly[i].pos.y);
+                GameGrid.Children.Add(temp);
+            }
+
+
+            time = TimeSpan.FromMilliseconds(0);
+            Start(Poly);
+            
         }
+
         private Grid GameGrid;
         private void createGameBoard()
         {
@@ -80,9 +98,59 @@ namespace Temtris
             Grid.SetColumnSpan(GameGrid, 10);
             MainMenu_Grid.Children.Add(GameGrid);
         }   
-        private void Movement(Rectangle test)
+
+        private TimeSpan time = new TimeSpan();
+        
+        private void Start(List <mino> Poly)
         {
-            
+            int n = 0;
+            while(n != 100000)
+            {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            if(Checker(Poly) == false)
+            {
+                if(time >= TimeSpan.FromMilliseconds(500))
+                {
+                    time = time - TimeSpan.FromMilliseconds(500);
+                    Poly = down(Poly);
+                } 
+            }
+            sw.Stop();
+            time = time + (long)sw.ElapsedMilliseconds;
+            n++;
+            }
+        }
+
+        private List<mino> down(List <mino> Poly)
+        {
+            for(int i = 0; i < 4; i++)
+            {
+                Poly[i].pos.y++;
+            }
+            for(int i = 0; i < 4; i++)
+            {
+                RemoveGE(GameGrid, Poly[i].pos.y, Poly[i].pos.x);
+            }
+            return Poly;
+        }
+        private void RemoveGE(Grid g, int r, int c)
+        {
+            for(int i = 0; i <  g.Children.Count; i++)
+            {
+                UIElement e = g.Children[i];
+                if(Grid.GetRow(e)==r && Grid.GetColumn(e) == c)
+                {
+                    g.Children.Remove(e);
+                }
+            }
+        }
+
+
+
+
+/*        private void Movement(Rectangle temp)
+        {
             if (Checker(test) == false)
             {
                 var backgroundWorker = new BackgroundWorker();
@@ -136,24 +204,65 @@ namespace Temtris
                 }
             }
         }
-        private bool Checker(Rectangle test)
+*/
+    private bool Checker(List <mino> Poly)
         {
-            if (Grid.GetRow(test) + 1 < 20)
+            for(int i = 0; i < 4; i++)
             {
-                if (blocks[Grid.GetRow(test) + 1, Grid.GetColumn(test)] == true)
+                if (Poly[i].pos.y + 1 < 20)
                 {
-                    return true;
+                    if (blocks[Poly[i].pos.y + 1, Poly[i].pos.x] == true)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else
                 {
                     return false;
                 }
             }
-            else
-            {
-                return false;
-            }
-
         }
+}
+    public class Position
+    {
+        public int x; //(cols)
+        public int y; //(rows)
+        public Position(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+        public Position()
+        {
+            x = 0;
+            y = 0;
+        }
+        public static Position operator +(Position lhs, Position rhs)
+        {
+            Position temp = new Position();
+            temp.x = lhs.x + rhs.x;
+            temp.y = lhs.y + rhs.y;
+            return temp;
+        }
+        public static Position operator -(Position lhs, Position rhs)
+        {
+            Position temp = new Position();
+            temp.x = lhs.x - rhs.x;
+            temp.y = lhs.y - rhs.y;
+            return temp;
+        }
+    }
+    public class mino
+    {
+        public mino(int x, int y)
+        {
+            pos = new Position(x,y); 
+        }
+        public Position pos;
+        public SolidColorBrush brush = new SolidColorBrush(Color.FromArgb(255, 0, 100, 0));
     }
 }
