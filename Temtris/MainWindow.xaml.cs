@@ -31,6 +31,7 @@ namespace Temtris
         {
             InitializeComponent();
         }
+        private double timeEllapsed = new double();
         private bool[,] blocks = new bool[20, 10];
         private int test_gg = 0;
         private List <mino> inactive = new List<mino>();
@@ -63,13 +64,10 @@ namespace Temtris
                 Grid.SetRow(temp, Poly[i].pos.y);
                 GameGrid.Children.Add(temp);
             }
-
-
-            time = TimeSpan.FromMilliseconds(0);
-            Start(Poly);
+            timeEllapsed = 450;
+            Startgame(Poly);
             
         }
-
         private Grid GameGrid;
         private void createGameBoard()
         {
@@ -98,39 +96,56 @@ namespace Temtris
             Grid.SetColumnSpan(GameGrid, 10);
             MainMenu_Grid.Children.Add(GameGrid);
         }   
-
-        private TimeSpan time = new TimeSpan();
-        
-        private void Start(List <mino> Poly)
+        private Stopwatch stopWatch = new Stopwatch();
+        private void Startgame(List <mino> Poly)
         {
+            
             int n = 0;
-            while(n != 100000)
+            while(n != 1)
             {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-            if(Checker(Poly) == false)
-            {
-                if(time >= TimeSpan.FromMilliseconds(500))
+                stopWatch.Start();
+                if(Checker(Poly) == false)
                 {
-                    time = time - TimeSpan.FromMilliseconds(500);
-                    Poly = down(Poly);
-                } 
-            }
-            sw.Stop();
-            time = time + (long)sw.ElapsedMilliseconds;
-            n++;
+                    if(timeEllapsed >= 1000)
+                    {
+                        timeEllapsed = timeEllapsed - 1000;
+                        Poly = down(Poly);
+                    } 
+                }
+                else
+                {
+                    n++;
+                }
+                stopWatch.Stop();
+                double tosee = ((double)stopWatch.ElapsedTicks)/1000.0;
+                if(tosee < 1.5)
+                {
+                    timeEllapsed = timeEllapsed + tosee;
+                }
+                stopWatch.Reset();
             }
         }
-
         private List<mino> down(List <mino> Poly)
-        {
+        {   
+            //for(int i = 0; i < 4; i++)
+            //{
+              //  RemoveGE(GameGrid, Poly[i].pos.y, Poly[i].pos.x);
+            //}
             for(int i = 0; i < 4; i++)
-            {
+            {     
                 Poly[i].pos.y++;
             }
             for(int i = 0; i < 4; i++)
             {
-                RemoveGE(GameGrid, Poly[i].pos.y, Poly[i].pos.x);
+                Rectangle temp = new Rectangle();
+                temp.Width = 54;
+                temp.Height = 54;
+                temp.StrokeThickness = 5;
+                temp.Fill = Poly[i].brush;
+                temp.Stroke = Poly[i].brush;
+                Grid.SetColumn(temp, Poly[i].pos.x);
+                Grid.SetRow(temp, Poly[i].pos.y);
+                GameGrid.Children.Add(temp);
             }
             return Poly;
         }
@@ -145,8 +160,29 @@ namespace Temtris
                 }
             }
         }
-
-
+        private bool Checker(List <mino> Poly)
+        {
+            bool occupied = false;
+            for(int i = 0; i < 4; i++)
+            {
+                if(Poly[i].pos.y + 1 < 20)
+                {
+                    if (blocks[Poly[i].pos.y + 1, Poly[i].pos.x] == true)
+                    {
+                        occupied = true;
+                    }
+                    else
+                    {
+                        occupied = false;
+                    }
+                }
+                else if(Poly[i].pos.y == 19)
+                {
+                    occupied = true;
+                }
+            }
+            return occupied;
+        }
 
 
 /*        private void Movement(Rectangle temp)
@@ -205,27 +241,7 @@ namespace Temtris
             }
         }
 */
-    private bool Checker(List <mino> Poly)
-        {
-            for(int i = 0; i < 4; i++)
-            {
-                if (Poly[i].pos.y + 1 < 20)
-                {
-                    if (blocks[Poly[i].pos.y + 1, Poly[i].pos.x] == true)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
+ 
 }
     public class Position
     {
