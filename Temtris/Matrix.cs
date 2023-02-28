@@ -12,7 +12,7 @@ namespace Temtris
         Red, Green, Blue, Pink;
     }
 
-    struct mino
+    struct Mino
     {
         
         public int x,y;
@@ -21,8 +21,8 @@ namespace Temtris
 
     internal class Matrix
     {
-        private List<mino> minos_active;
-        private List<mino> minos_inactive;
+        private List<Mino> minos_active;
+        private List<Mino> minos_inactive;
 
         public void Update(float ElapsedTime)
         {

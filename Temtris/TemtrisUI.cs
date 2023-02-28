@@ -6,12 +6,19 @@ using System.Threading.Tasks;
 
 namespace Temtris
 {
-    abstract class TemtrisUI
+    class TemtrisUI
     {
-        abstract public void Start();
+        // Starts the UI with Main Menu
+        GameEngine Temptris;
 
-        abstract public void Update(List<Mino> minos);
+        public void Start()
+        {
+            Temptris= new TemtrisGame();
+        }
 
-        abstract public int Menu();
+        private bool Game_Update()
+        {
+
+        }
     }
 }
