@@ -20,9 +20,11 @@ namespace Temtris
     /// </summary>
     public partial class MainWindow : Window
     {
+        GameEngine Temtris = new TemtrisGame();
         public MainWindow()
         {
             InitializeComponent();
         }
+
     }
 }
