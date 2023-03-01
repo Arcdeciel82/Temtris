@@ -163,121 +163,143 @@ Temtris is a Tetris-like we are developing as part of our CSCI352 class.
 \IEEEpeerreviewmaketitle
 
 \section{Introduction}
-Temtris is a wpf application that we aim to be Tetris clone. Tetris, is a game where 4 block section shapes fall from top down and you try to fit rows of these blocks together at an ever increasing pace until the screen inevitably fills causing game over. A score is computed based on how efficiently you clear the board as the game progresses, with more points being awarded for streaks of row clears and tetris row clears. Temtris will include this regular mode with it's locked shape patterns, as well as a mode where the blocks are randomly generated within certain parameters. Our target audience would probably be the select few who call themselves "gamers", as well as those who are looking for a casual way to pass the time. We are making Temtris as a duo as part of our CSCI 352 class. That being the case, we still want Temtris to be a fun and interesting game for anyone looking to play.
+Temtris is a WPF clone of Tetris with our own spin added in. Tetris, is a game where 4 block section shapes fall from top down and you try to fit rows of these blocks together at an ever increasing pace until the screen inevitably fills causing game over. A score is computed based on how efficiently you clear the board as the game progresses, with more points being awarded for streaks of row clears and tetris row clears (4 simultaneous row clears). Our target audience is anyone looking to pass time with a casual game of Tetris. We are making Temtris as a duo as part of our CSCI 352 class. That being the case, we still want Temtris to be a fun and interesting game for anyone looking to play.
 
 \subsection{Background}
 A Tetrimino is one of the 7 classic Tetris shapes; these include the O, I, T, L, J, S, and Z shapes. Each Tetrimino is made up of four squares called minos. The matrix is the space where the Tetris game is played. A 'line clear' happens when a horizontal row is completely filled, causing it to be removed from the matrix. Lock-down is when a Tetrimino is locked into its current position and is no longer controllable.
 
-Also, consider going into your personal connection with this project -- why did you decide to do it?
-Whilst attempting to come up with ideas, the idea of remaking Tetris came up, and to clarify this is coming from Hunter, when I heard Tetris my brain went full monkey, "ooh ooh ahh ahh Tetris funny, seems more interesting than anything else we have thought up" and that's how we landed on Temtris.  
+While attempting to brainstorm ideas for our CSCI 352 class, the idea of a Tetris clone come up (with the awful misspelling Temtris). Eventually we settled on the idea and the name stuck.
 
 \subsection{Impacts}
-Temtris is a great way to improve our skills and better prepare us for working on more impactful projects in the future. Impact wise, towards the greater scale of coding, it has none, but for personal entertainment as well as great c\# practice it will be quite impactfull. 
+Tetris is a classic game that has had a major impact on the gaming community since its debut. Continuing to iterate upon Tetris and bring it back into the community repeatedly will only deepen its legacy. Temtris is a great way to  do this while improving our skills and preparing us for working in teams and on larger projects in the future.
 
 \subsection{Challenges}
-This is the first moderately sized project either of us has attempted. This is also our first real foray into WPF and c\# so there are some growing pains there as well. As for the project itself, I suspect getting the movement and rotations to feel like a proper Tetris game will take much more fine tuning than we have needed to use in the past.
+This is the first moderately sized project either of us has attempted. This is also our first real foray into WPF and c\# so there are some growing pains there as well. As for the project itself, I suspect getting the movement and rotations to feel like a proper Tetris game will take much more fine tuning than we have needed to use in the past. Rotating the pieces will likely also pose some sort of challenge.
 
 \section{Scope}
 Our initial goal is to implement the following typical parts of a Tetris-like: 
 \begin{itemize}
-\item Implement a main menu with access to settings and game modes.
-\item Have controllable tetriminos that fall into place in the matrix.
-\item Implement all 7 tetrimino variants. 
+\item Implement a main menu.
+\item Have controllable tetriminos (2x1 shapes initially) that fall into place in the matrix. 
 \item Have rows that disappear when they fill up, i.e., the line clears.
 \item Keep score or track how well the player does in some way.
 \item Display the next piece to spawn.
-\item Play background music and have sound effects for line clears, player actions, etc.
 \end{itemize}
 
 For stretch goals, we would like to add the following:
 \begin{itemize}
+\item Implement all 7 tetrimino variants.
 \item Implement a multiplayer mode. Having at least two clients with a competitive game mode over LAN or just sharing a keyboard.
-\item Different power-ups may be earned by removing a certain amount of one color from the board.
+\item Different power-ups may be earned by removing a certain amount of one color from the board. Perhaps board clear (of that color) or maybe have the next five pieces all be 'L' shapes.
+\item Play background music and have sound effects for line clears, player actions, etc.
+\item Have random shapes form and fall into the matrix ( as opposed to the standard Tetris shapes.
 \end{itemize}
 
 \subsection{Requirements}
-As part of fleshing out the scope of your requirements, you'll also need to keep in mind both your functional and non-functional requirements.  These should be listed, and explained in detail as necessary.  Use this area to explain how you gathered these requirements.
+These requirements are things we feel make Tetris what it is. Without them the Temtris would ultimately not be a Tetris clone.
 
 \subsubsection{Functional}
 \begin{itemize}
-\item User needs to have a private shopping cart -- this cannot be shared between users, and needs to maintain state across subsequent visits to the site
-\item Users need to have website accounts -- this will help track recent purchases, keep shopping cart records, etc.
-\item You'll need more than 2 of these...
+\item Users can control Tetriminos (rotate, move left or right).
+\item Tetriminos are created and fall from the top of the matrix.
+\item Row clears should happen as the rows are filled.
+\item Main menu allows the user to start the game.
 \end{itemize}
 
 \subsubsection{Non-Functional}
 \begin{itemize}
-\item Security -- user credentials must be encrypted on disk, users should be able to reset their passwords if forgotten
-\item you'll typically have fewer non-functional than functional requirements
+\item Main menu should display controls needed to play the game.
+\item User interface should be attractive and inviting.
 \end{itemize}
 
 \subsection{Use Cases}
-This subsection is arguably part of how you define your project scope (why it is in the Scope section...).  In a traditional Waterfall approach, as part of your requirements gathering phase (what does the product actually \emph{need} to do?), you will typically sit down with a user to develop use cases.
-
-You should have a table listing all use cases discussed in the document, the ID is just the order it is listed in, the name should be indicative of what should happen, the primary actor is typically most important in an application where you may have different levels of users (think admin vs normal user), complexity is a best-guess on your part as to how hard it should be.  A lower number in priority indicates that it needs to happen sooner rather than later.  A sample table, or Use Case Index can be seen in Table \ref{tab:useCaseIndex}.
-
-
-
-
 \begin{table}
 \centering
 \begin{tabular}{|c|c|c|c|c|}
 \hline
 Use Case ID & Use Case Name & Primary Actor & Complexity & Priority \\
 \hline \hline
-1 & Add item to cart & Shopper & Med & 1\\
+1 & Start game & Player & Easy & 1\\
 \hline
-2 & Checkout & Shopper & Med & 1\\
+2 & Move tetriminos left or right & Player & Easy & 1\\
+\hline
+3 & Lower tetrimonios into position & Player & Med & 2\\
+\hline
+4 & Rotate tetriminos & Player & Hard & 3\\
 \hline
 
+
 \end{tabular}
-\caption{Sample use case table}
+\caption{use case table}
 \label{tab:useCaseIndex}
 \end{table}
 
 
 \begin{itemize}
 \item[Use Case Number:] 1
-\item[Use Case Name:] Add item to cart
-\item[Description:] A shopper on our site has identified an item they wish to buy.  They will click on a ``Add to Cart" button.  This will kick off a process to add one instance of the item to their cart.
+\item[Use Case Name:] Start game
+\item[Description:] A player wishes to pass some time by playing Temptris. They start the game and click on the "Start Game" button from the main menu.
 \end{itemize}
 
-You will then go on to (minimally) discuss a basic flow for the process:
-
 \begin{enumerate}
-\item User navigates to page listing desired item
-\item User left-clicks on ``Add to Cart" button.
-\item User cart is updated to reflect the new item, this also updates the current total.
-\item[Termination Outcome:] The user now has a single instance of the item in their cart.
+\item The Player launches the application.
+\item The Player left-clicks on "Start Game" button.
+\item The game screen appears and the game begins.
+\item[Termination Outcome:] A game of Temtris is now running.
 \end{enumerate}
 
-You may need to also add in any alternative flows:
-
-Alternative: Item already exists in the cart
+Alternative: A previous game of Temtris has just ended.
 \begin{enumerate}
-\item User navigates to page listing desired item
-\item User left-clicks on ``Add to Cart" button.
-\item User cart is updated to reflect the new item, showing that one more instance of the existing item has been added.  This also updates the current total.
-\item[Termination Outcome:] The user now has multiple instances of the item in their cart.
+\item Player left-clicks on "Play Again" button.
+\item The game screen appears and the game begins..
+\item[Termination Outcome:] A game of Temtris is now running.
 \end{enumerate}
-
-You will often also need to include pictures or diagrams.  It is quite common to see use-case diagrams in such write-ups.  To properly reference an image, you will need to use the \texttt{figure} environment and will need to reference it in your text (via the \texttt{ref} command) (see Figure \ref{cat1}).  NOTE: this is not a use case diagram, but a kitten.
-
-After fully describing a use case, it is time to move on to the next use case:
 
 \begin{itemize}
 \item[Use Case Number:] 2
-\item[Use Case Name:] Checkout
-\item[Description:] A shopper on our site has finished shopping.  They will click on a ``Checkout" button.  This will kick off a process to calculate cart total, any taxes, shipping rates, and collect payment from the shopper.
-
+\item[Use Case Name:] Move tetriminos left or right
+\item[Description:] A game of Temtris has been started and the player wishes to move the falling piece to the left or right. The player presses the left or right arrow on the keyboard and the active tetrimino moves accordingly.
 \end{itemize}
 
-You will then need to continue to flesh out all use cases you have identified for your project.
+\begin{enumerate}
+\item The player presses the left arrow key on the keyboard.
+\item The active tetrimino shifts one position to the left.
+\item Player presses the right arrow key on the keyboard.
+\item The active tetrimino shifts one block to the right.
+\item[Termination Outcome:] The player has control over the left and right motion of the active tetrimino.
+\end{enumerate}
+
+\begin{itemize}
+\item[Use Case Number:] 3
+\item[Use Case Name:] Lower tetriminos into position
+\item[Description:] The player is comfortable with the current trajectory of the active tetrimino and wishes to lower it into place. The player presses the down arrow key on the keyboard and the active tetrimino moves down into place.
+\end{itemize}
+
+\begin{enumerate}
+\item The player presses the down arrow key on the keyboard.
+\item The active tetrimino begins to fall faster.
+\item The active tetrimino stops falling when it reaches inactive tetriminos and is set into place.
+\item[Termination Outcome:] The player can speed up the falling of the active tetrimino.
+\end{enumerate}
+
+\begin{itemize}
+\item[Use Case Number:] 4
+\item[Use Case Name:] Rotate tetriminos
+\item[Description:] The player wishes to rotate a tetrimino and presses the up arrow key on the keyboard. The active tetrimino rotates ninety degrees allowing the player to better control how it falls.
+\end{itemize}
+
+\begin{enumerate}
+\item The player presses the up arrow key on the keyboard.
+\item The active tetrimino rotates 90 degrees clockwise.
+\item The player presses the up arrow key on the keyboard.
+\item The active tetrimino rotates an additional 90 degrees clockwise.
+\item[Termination Outcome:] The player has control over the rotation of the active tetrimino.
+\end{enumerate}
 
 \begin{figure}[ht!]
-\includegraphics[height=250px, width=350px]{cat1.jpg}
-\caption{First picture, this is a kitten, not a use case diagram}
-\label{cat1}
+\includegraphics[scale=.5]{UseCaseDiagram.png}
+\caption{Use Case Diagram}
+\label{Diagram1}
 \end{figure}
 
 \subsection{Interface Mockups}
@@ -297,7 +319,7 @@ At first, this will be a little empty (it will need to be filled in by the time 
 Show the full structure of your program.  Make sure to keep on updating this section as your project evolves (you often start out with one plan, but end up modifying things as you move along).  As a note, while Dia fails miserably at generating pdfs (probably my fault), I have had much success with png files.  Make sure to wrap your images in a \texttt{figure} environment, and to reference with the \texttt{ref} command.  For example, see Figure \ref{cat2}.
 
 \begin{figure}[ht!]
-\includegraphics[scale=1.5]{cat2.jpg}
+includegraphics[scale=1.5]{cat2.jpg}:
 \caption{Your figures should be in the \emph{figure} environment, and have captions.  Should also be of diagrams pertaining to your project, not random internet kittens}
 \label{cat2}
 \end{figure}
