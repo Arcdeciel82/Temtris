@@ -1,4 +1,6 @@
-﻿namespace Temtris
+﻿using System.Dynamic;
+
+namespace Temtris
 {
     internal class TemtrisGame : GameEngine
     {
@@ -6,7 +8,7 @@
         // MinoFactory ???
         // Input class ???
         double elapsedTime = 0.0;
-        double fallRate = 1000.0;
+        double fallRate = 10000.0;
         bool isRunning = false;
 
         protected override void OnStart()
@@ -23,10 +25,17 @@
                 elapsedTime -= fallRate;
                 // perform timed updates
 
+                // for testing game exits after first loop. (10 secs)
+                isRunning = false;
             }
             // act on user input / non timed updates
 
             return isRunning;
+        }
+
+        public Matrix GetMatrix()
+        {
+            return matrix;
         }
     }
 }

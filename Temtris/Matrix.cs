@@ -21,7 +21,7 @@ namespace Temtris
         public Color color;
     }
 
-    internal class Matrix
+    struct Matrix
     {
         private List<Mino> minos_active;
         private List<Mino> minos_inactive;
