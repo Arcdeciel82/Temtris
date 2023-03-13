@@ -1,6 +1,4 @@
-﻿using System.Dynamic;
-
-namespace Temtris
+﻿namespace Temtris
 {
     internal class TemtrisGame : GameEngine
     {

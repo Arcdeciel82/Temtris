@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
+﻿using System.Collections.Generic;
 
 namespace Temtris
 {
@@ -11,16 +6,17 @@ namespace Temtris
     {
         Red,
         Green,
-        Blue, 
+        Blue,
         Pink,
     }
 
     struct Mino
     {
-        public int x,y;
+        public int x, y;
         public Color color;
     }
 
+    // Basically where all of the game data is stored.
     struct Matrix
     {
         private List<Mino> minos_active;

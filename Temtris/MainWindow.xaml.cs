@@ -1,18 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Temtris
 {
@@ -41,9 +28,9 @@ namespace Temtris
         void Game_DoWork(object sender, DoWorkEventArgs e)
         {
             //work for game thread
-            BackgroundWorker worker = sender as BackgroundWorker;
-            GameEngine game = (GameEngine) e.Argument;
-            
+            BackgroundWorker worker = (BackgroundWorker)sender;
+            GameEngine game = (GameEngine)e.Argument;
+
             e.Result = game.Start(worker);
         }
 
@@ -51,7 +38,7 @@ namespace Temtris
         {
             TemtrisGame game = (TemtrisGame)e.UserState;
             Matrix matrix = game.GetMatrix();
-            
+
 
             // Test code to see if backgroud worker is working
             Button_Start_Game.Content = "GameUpdate worked!";
@@ -69,7 +56,8 @@ namespace Temtris
             // Set up UI for a running game here
 
             // start game with new GameEngine object
-            if (gameWorker.IsBusy == false) {
+            if (gameWorker.IsBusy == false)
+            {
                 gameWorker.RunWorkerAsync(new TemtrisGame());
             }
         }
