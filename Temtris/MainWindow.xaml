@@ -5,8 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Temtris"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Temtris" Height="900" Width="1600">
+    <Button x:Name="Button_Start_Game" Content="Start Game" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="50" Background="#FFEC5656" Click="Button_Start_Game_Click"/>
+
 </Window>

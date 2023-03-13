@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,16 +16,49 @@ using System.Windows.Shapes;
 
 namespace Temtris
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        GameEngine Temtris = new TemtrisGame();
+        TemtrisGame game;
+        BackgroundWorker gameWorker;
+
         public MainWindow()
         {
             InitializeComponent();
+            InitializeWorker();
+            TemtrisGame game = new TemtrisGame();
         }
+
+        private void InitializeWorker()
+        {
+            gameWorker = new BackgroundWorker();
+            gameWorker.WorkerReportsProgress = true;
+            gameWorker.WorkerSupportsCancellation = true;
+
+            gameWorker.DoWork += worker_DoWork;
+            gameWorker.ProgressChanged += worker_ProgressChanged;
+            gameWorker.RunWorkerCompleted += worker_WorkCompleted;
+        }
+
+        void worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+
+        }
+
+        void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+
+        }
+
+        void worker_WorkCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+
+        }
+
+        private void Button_Start_Game_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
 
     }
 }
