@@ -9,24 +9,22 @@ namespace Temtris
 {
     enum Color
     {
-        Red, Green, Blue, Pink;
+        Red,
+        Green,
+        Blue, 
+        Pink,
     }
 
     struct Mino
     {
-        
         public int x,y;
         public Color color;
     }
 
-    internal class Matrix
+    struct Matrix
     {
         private List<Mino> minos_active;
         private List<Mino> minos_inactive;
-
-        public void Update(float ElapsedTime)
-        {
-
-        }
+        private int score;
     }
 }
