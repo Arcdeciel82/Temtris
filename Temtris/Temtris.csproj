@@ -57,6 +57,7 @@
     </ApplicationDefinition>
     <Compile Include="GameEngine.cs" />
     <Compile Include="Matrix.cs" />
+    <Compile Include="MinoFactory.cs" />
     <Compile Include="TemtrisGame.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

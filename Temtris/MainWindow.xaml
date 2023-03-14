@@ -6,6 +6,21 @@
         xmlns:local="clr-namespace:Temtris"
         mc:Ignorable="d"
         Title="Temtris" Height="900" Width="1600">
-    <Button x:Name="Button_Start_Game" Content="Start Game" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="50" Background="#FFEC5656" Click="Button_Start_Game_Click"/>
 
+    <Grid ShowGridLines="False">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Button x:Name="Button_Start_Game" Content="Start Game" Background="#FFEC5656" Click="Button_Start_Game_Click"/>
+        <Canvas x:Name="gameCanvas" Grid.Column="1" Grid.Row="1" Background="Black"/>
+
+
+    </Grid>
 </Window>

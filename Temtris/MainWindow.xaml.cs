@@ -1,5 +1,11 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Media3D.Converters;
+using System.Windows.Shapes;
 
 namespace Temtris
 {
@@ -11,11 +17,11 @@ namespace Temtris
         {
             InitializeComponent();
             InitializeWorker();
-            TemtrisGame game = new TemtrisGame();
         }
 
         private void InitializeWorker()
         {
+            // Should probably generate the Canvas programmatically 
             gameWorker = new BackgroundWorker();
             gameWorker.WorkerReportsProgress = true;
             gameWorker.WorkerSupportsCancellation = true;
@@ -38,17 +44,44 @@ namespace Temtris
         {
             TemtrisGame game = (TemtrisGame)e.UserState;
             Matrix matrix = game.GetMatrix();
+            
+            gameCanvas.Children.Clear();
 
+            //TODO: set color correctly. Correctly scale size/pos to canvas.
+
+            foreach (Mino m in matrix.inactive_Minos)
+            {
+                Rectangle rect = new Rectangle();
+                rect.Fill = new SolidColorBrush(Colors.Blue);
+                rect.Stroke = new SolidColorBrush(Colors.Blue);
+                rect.Width = 20;
+                rect.Height = 20;
+                gameCanvas.Children.Add(rect);
+                Canvas.SetLeft(rect, m.x * 20);
+                Canvas.SetTop(rect, m.y * 20);
+
+            }
+            foreach (Mino m in matrix.active_Tetra)
+            {
+                Rectangle rect = new Rectangle();
+                rect.Fill = new SolidColorBrush(Colors.Blue);
+                rect.Stroke = new SolidColorBrush(Colors.Blue);
+                rect.Width = 20;
+                rect.Height = 20;
+                gameCanvas.Children.Add(rect);
+                Canvas.SetLeft(rect, m.x * 20);
+                Canvas.SetTop(rect, m.y * 20);
+            }
 
             // Test code to see if backgroud worker is working
-            Button_Start_Game.Content = "GameUpdate worked!";
+            Button_Start_Game.Content = "Game Running!";
         }
 
         void Game_Completed(object sender, RunWorkerCompletedEventArgs e)
         {
+
             // Transition UI to game completed here
             Button_Start_Game.Content = "Game Finished!";
-
         }
 
         private void Button_Start_Game_Click(object sender, RoutedEventArgs e)
