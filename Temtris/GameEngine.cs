@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace Temtris
 {
@@ -25,7 +19,6 @@ namespace Temtris
             bool isRunning = true;
             while (isRunning)
             {
-                //TotalTime = time.Elapsed.TotalMilliseconds;
                 isRunning = OnUpdate(ElapsedTime);
                 timeSinceUIUpdate += ElapsedTime;
 
@@ -47,6 +40,6 @@ namespace Temtris
 
         protected abstract void OnStart();
         protected abstract bool OnUpdate(double elapsedTimeMs);
-        protected virtual void OnStop() {}
+        protected virtual void OnStop() { }
     }
 }
