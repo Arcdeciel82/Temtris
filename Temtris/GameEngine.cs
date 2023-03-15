@@ -17,7 +17,7 @@ namespace Temtris
             OnStart();
             double ElapsedTime = time.Elapsed.TotalMilliseconds;
             bool isRunning = true;
-            while (isRunning)
+            while (isRunning && !w.CancellationPending)
             {
                 isRunning = OnUpdate(ElapsedTime);
                 timeSinceUIUpdate += ElapsedTime;

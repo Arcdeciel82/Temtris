@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
@@ -15,24 +16,27 @@ namespace Temtris
     {
         Matrix matrix;
         MinoFactory factory;
+        Input keyboard;
         double elapsedTime = 0.0;
         double fallRate = 500.0;
         bool isRunning = false;
+        double fallRateMod = 1.0;
 
         protected override void OnStart()
         {
             isRunning = true;
             matrix = new Matrix();
             factory = new MinoFactory();
+            keyboard = new Input();
             matrix.active_Tetra = factory.Next();
         }
 
         protected override bool OnUpdate(double elapsedTimeMs)
         {
             elapsedTime += elapsedTimeMs;
-            if (elapsedTime > fallRate)
+            if (elapsedTime > fallRate * fallRateMod)
             {
-                elapsedTime -= fallRate;
+                elapsedTime -= fallRate * fallRateMod;
 
                 // perform timed updates
                 DropTetra();
@@ -40,9 +44,7 @@ namespace Temtris
             }
 
             // act on user input / non timed updates
-
-            //ProcessUserInput(); Apparently needs to be on main thread.... that complicates things...
-
+            ProcessUserInput();
             return isRunning;
         }
 
@@ -53,21 +55,30 @@ namespace Temtris
 
         private void ProcessUserInput()
         {
-            if ((Keyboard.GetKeyStates(Key.W) & KeyStates.Down) > 0)
+            Application.Current.Dispatcher.Invoke(() => {
+                keyboard.Update();
+            });
+
+            if (keyboard.GetKey(Key.W).isPressed)
             {
                 RotateTetrimino();
             }
-            if ((Keyboard.GetKeyStates(Key.A) & KeyStates.Down) > 0)
+            if (keyboard.GetKey(Key.A).isPressed)
             {
                 TranslateTetrimino(Direction.Left);
             }
-            if ((Keyboard.GetKeyStates(Key.D) & KeyStates.Down) > 0)
+            if (keyboard.GetKey(Key.D).isPressed)
             {
                 TranslateTetrimino(Direction.Right);
             }
-            if ((Keyboard.GetKeyStates(Key.S) & KeyStates.Down) > 0)
+            if (keyboard.GetKey(Key.S).isPressed)
             {
-                TranslateTetrimino(Direction.Down);
+                elapsedTime = 0.0;
+                fallRateMod = 0.3;
+            }
+            if (keyboard.GetKey(Key.S).isReleased)
+            {
+                fallRateMod = 1.0;
             }
         }
 
