@@ -54,11 +54,11 @@ namespace Temtris
                 Rectangle rect = new Rectangle();
                 rect.Fill = new SolidColorBrush(Colors.Blue);
                 rect.Stroke = new SolidColorBrush(Colors.Blue);
-                rect.Width = 20;
-                rect.Height = 20;
+                rect.Width = gameCanvas.ActualWidth / 10;
+                rect.Height = gameCanvas.ActualHeight / 20;
                 gameCanvas.Children.Add(rect);
-                Canvas.SetLeft(rect, m.x * 20);
-                Canvas.SetTop(rect, m.y * 20);
+                Canvas.SetLeft(rect, m.x * rect.Width);
+                Canvas.SetTop(rect, m.y * rect.Height);
 
             }
             foreach (Mino m in matrix.active_Tetra)
@@ -66,11 +66,11 @@ namespace Temtris
                 Rectangle rect = new Rectangle();
                 rect.Fill = new SolidColorBrush(Colors.Blue);
                 rect.Stroke = new SolidColorBrush(Colors.Blue);
-                rect.Width = 20;
-                rect.Height = 20;
+                rect.Width = gameCanvas.ActualWidth / 10;
+                rect.Height = gameCanvas.ActualHeight / 20;
                 gameCanvas.Children.Add(rect);
-                Canvas.SetLeft(rect, m.x * 20);
-                Canvas.SetTop(rect, m.y * 20);
+                Canvas.SetLeft(rect, m.x * rect.Width);
+                Canvas.SetTop(rect, m.y * rect.Height);
             }
 
             // Test code to see if backgroud worker is working
@@ -93,6 +93,11 @@ namespace Temtris
             {
                 gameWorker.RunWorkerAsync(new TemtrisGame());
             }
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            gameWorker.CancelAsync();
         }
     }
 }

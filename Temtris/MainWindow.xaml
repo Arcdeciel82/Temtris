@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Temtris"
         mc:Ignorable="d"
-        Title="Temtris" Height="900" Width="1600">
+        Closing="Window_Closing"
+        Title="Temtris" Height="900" Width="650">
 
     <Grid ShowGridLines="False">
         <Grid.ColumnDefinitions>
