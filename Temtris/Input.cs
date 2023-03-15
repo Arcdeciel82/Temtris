@@ -23,6 +23,7 @@ namespace Temtris
 
         public Input()
         {
+            // Kinda regret doing it this way...
             foreach (Key key in Enum.GetValues(typeof(Key)))
             {
                 if (!keyMap.ContainsKey(key) && key != Key.None)

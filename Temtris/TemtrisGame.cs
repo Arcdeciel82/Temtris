@@ -55,6 +55,7 @@ namespace Temtris
 
         private void ProcessUserInput()
         {
+            // Tell the main thread to do the keyboard update, because apparently that's neccesary.
             Application.Current.Dispatcher.Invoke(() => {
                 keyboard.Update();
             });
