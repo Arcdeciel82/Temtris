@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Temtris
 {
+    // Handles the creation of polyminos for a game of Temtris
     internal class MinoFactory
     {
+        // Placeholder returns the same 1x2 Tetra.
         public List<Mino> Next()
         {
             List<Mino> tetra = new List<Mino>();

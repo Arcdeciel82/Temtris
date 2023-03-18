@@ -17,11 +17,11 @@ namespace Temtris
         {
             InitializeComponent();
             InitializeWorker();
+            // Should probably generate the Canvas programmatically 
         }
 
         private void InitializeWorker()
         {
-            // Should probably generate the Canvas programmatically 
             gameWorker = new BackgroundWorker();
             gameWorker.WorkerReportsProgress = true;
             gameWorker.WorkerSupportsCancellation = true;

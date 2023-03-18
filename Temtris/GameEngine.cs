@@ -4,12 +4,14 @@ using System.Threading;
 
 namespace Temtris
 {
+    // Generic gameengine intended to run as a BackgroundWorker
     abstract internal class GameEngine
     {
         Stopwatch time = new Stopwatch();
         BackgroundWorker worker;
         double timeSinceUIUpdate = 0.0;
 
+        // Starts the game Engine
         public GameEngine Start(BackgroundWorker w)
         {
             worker = w;
@@ -38,8 +40,13 @@ namespace Temtris
             return this;
         }
 
+        // Runs once after Start()
         protected abstract void OnStart();
+
+        // Runs on each game loop. Game loop exits if OnUpdate returns false.
         protected abstract bool OnUpdate(double elapsedTimeMs);
+
+        // Runs once after the Game loop exits.
         protected virtual void OnStop() { }
     }
 }

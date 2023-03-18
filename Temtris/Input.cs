@@ -17,6 +17,7 @@ namespace Temtris
         public bool isReleased = false;
     }
 
+    // Keeps track of the KeyState for every System.Input.Windows.Key.
     internal class Input
     {
         Dictionary<Key, KeyState> keyMap = new Dictionary<Key, KeyState>();
@@ -34,6 +35,7 @@ namespace Temtris
             }
         }
 
+        // Updates the internal KeyStates
         public void Update()
         {
             foreach (KeyValuePair<Key, KeyState> entry in keyMap)
@@ -61,6 +63,7 @@ namespace Temtris
             }
         }
 
+        // Returns the KeyState of the given key.
         public KeyState GetKey(Key key)
         {
             return keyMap[key];

@@ -12,6 +12,7 @@ namespace Temtris
         Up, Down, Left, Right
     }
 
+    // Handles all of the game logic and updates related to a game of Temtris.
     internal class TemtrisGame : GameEngine
     {
         Matrix matrix;
@@ -22,6 +23,7 @@ namespace Temtris
         bool isRunning = false;
         double fallRateMod = 1.0;
 
+        // Runs once when the game is started
         protected override void OnStart()
         {
             isRunning = true;
@@ -31,6 +33,7 @@ namespace Temtris
             matrix.active_Tetra = factory.Next();
         }
 
+        // Runs on every loop of the game engine.
         protected override bool OnUpdate(double elapsedTimeMs)
         {
             elapsedTime += elapsedTimeMs;
@@ -48,11 +51,13 @@ namespace Temtris
             return isRunning;
         }
 
+        // Returns a copy of the Matrix
         public Matrix GetMatrix()
         {
             return new Matrix(matrix);
         }
 
+        // Gets input updates and responds to them.
         private void ProcessUserInput()
         {
             // Tell the main thread to do the keyboard update, because apparently that's neccesary.
@@ -83,11 +88,13 @@ namespace Temtris
             }
         }
 
+        // Rotates matrix.active_Tetra 90 degrees clockwise.
         private void RotateTetrimino()
         {
             //TODO: Implement
         }
 
+        // Translates matrix.active_Tetra 1 unit in the given dirction or returns false if this would cause a collision.
         private bool TranslateTetrimino(Direction d)
         {
             int x = 0, y = 0;
@@ -109,7 +116,6 @@ namespace Temtris
 
             // Create backup List in case of collision.
             List<Mino> oldTetra = new List<Mino>();
-
             foreach (Mino m in matrix.active_Tetra)
             {
                 oldTetra.Add(new Mino(m));
@@ -119,7 +125,7 @@ namespace Temtris
             {
                 m.x += x;
                 m.y += y;
-                if (m.x < 0 || m.x > 9 || MinoCollision())
+                if (MinoCollision())
                 {
                     matrix.active_Tetra = oldTetra;
                     return false;
@@ -129,12 +135,13 @@ namespace Temtris
             return true;
         }
 
+        // Returns true if active_Tetra is colliding with any minos, the left/right walls, or the floor.
         private bool MinoCollision()
         {
-            // This is a slow solution, but with so few minos it's probably fine.
+            // This is a /slow/ solution, but with so few minos it's probably fine.
             foreach (Mino m in matrix.active_Tetra)
             {
-                if (m.y > 19)
+                if (m.y > 19 || m.x < 0 || m.x > 9)
                 {
                     return true;
                 }
@@ -149,6 +156,7 @@ namespace Temtris
             return false;
         }
 
+        // Lowers active_Tetra or gets the next Tetra from factory.
         private void DropTetra()
         {
             if (!TranslateTetrimino(Direction.Down))
@@ -158,6 +166,7 @@ namespace Temtris
             }
         }
 
+        // Checks for and performs row clears. Updates fallrate accordingly.
         private void RowClear()
         {
             //TODO: Implement

@@ -10,6 +10,7 @@ namespace Temtris
         Pink,
     }
 
+    // Represents a single block in the matrix
     class Mino
     {
         public int x, y;
