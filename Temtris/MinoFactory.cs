@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace Temtris
 {
@@ -17,11 +18,13 @@ namespace Temtris
             Mino first = new Mino();
             first.x = 5;
             first.y = 0;
+            first.color = Colors.Blue;
             tetra.Add(first);
 
             Mino second = new Mino();
             second.x = 6;
             second.y = 0;
+            second.color = Colors.Green;
             tetra.Add(second);
 
 
