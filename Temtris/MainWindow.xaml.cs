@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Media.Media3D.Converters;
 using System.Windows.Shapes;
 
 namespace Temtris
 {
+    // adds a 20x10 grid to the canvas where the tetriminos will be located.
     class GridCanvas : Canvas
     {
         protected override void OnRender(DrawingContext dc)
@@ -76,8 +75,6 @@ namespace Temtris
             Canvas.SetZIndex(Button_StartGame, 1);
             gameCanvas.Children.Add(Button_StartGame);
 
-
-
             Button Button_ExitGame = new Button();
             Button_ExitGame.Background = Brushes.Red;
             Button_ExitGame.Content = "Exit Game";
@@ -89,11 +86,8 @@ namespace Temtris
             Canvas.SetZIndex(Button_ExitGame, 1);
             gameCanvas.Children.Add(Button_ExitGame);
 
-
             InitializeWorker();
             gameWorker.RunWorkerAsync(new TemtrisGame());
-
-            
         }
 
         private void InitializeWorker()
@@ -121,7 +115,7 @@ namespace Temtris
         {
             TemtrisGame game = (TemtrisGame)e.UserState;
             Matrix matrix = game.GetMatrix();
-            
+
             foreach (Rectangle r in gameRects)
             {
                 gameCanvas.Children.Remove(r);
@@ -137,7 +131,7 @@ namespace Temtris
             foreach (Mino m in minos)
             {
                 Rectangle rect = new Rectangle();
-                
+
                 rect.Width = (gameCanvas.ActualWidth - gameAreaX) / 10;
                 rect.Height = (gameCanvas.ActualHeight - gameAreaY) / 20;
                 Canvas.SetLeft(rect, m.x * rect.Width + gameAreaX);
@@ -152,12 +146,14 @@ namespace Temtris
 
         void Game_Completed(object sender, RunWorkerCompletedEventArgs e)
         {
-
             // Transition UI to game completed here
+            // TODO: handle gameover
         }
 
         private void Button_StartGame_Click(object sender, RoutedEventArgs e)
         {
+            // Set up UI for a running game here
+            // Resize gameCanvas
             gameWorker.CancelAsync();
             gameCanvas = new GridCanvas();
             gameCanvas.Background = Brushes.Black;
@@ -165,10 +161,10 @@ namespace Temtris
             gameWindow.UpdateLayout();
             gameAreaX = gameCanvas.ActualWidth * 0.3;
             gameAreaY = gameCanvas.ActualHeight * 0.1;
-            // Set up UI for a running game here
 
+            // TODO: Score
 
-
+            // TODO: Nextpiece preview
 
             InitializeWorker();
             gameWorker.RunWorkerAsync(new TemtrisGame());
