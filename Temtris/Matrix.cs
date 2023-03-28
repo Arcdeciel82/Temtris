@@ -25,15 +25,16 @@ namespace Temtris
     // Basically where all of the game data is stored.
     class Matrix
     {
+        public List<Mino> preview_Tetra = new List<Mino>();
         public List<Mino> active_Tetra = new List<Mino>();
-        public List<Mino> inactive_Minos = new List<Mino>();
-        public int score;
+        public List<Mino> inactive_Tetra = new List<Mino>();
+        public double score;
 
         public Matrix() { }
         public Matrix(Matrix copy)
         {
             active_Tetra.AddRange(copy.active_Tetra);
-            inactive_Minos.AddRange(copy.inactive_Minos);
+            inactive_Tetra.AddRange(copy.inactive_Tetra);
             score = copy.score;
         }
     }

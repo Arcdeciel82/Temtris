@@ -12,6 +12,13 @@ namespace Temtris
         Up, Down, Left, Right
     }
 
+    enum Difficulty
+    {
+        Menu,
+        Easy,
+        Hard,
+    };
+
     // Handles all of the game logic and updates related to a game of Temtris.
     internal class TemtrisGame : GameEngine
     {
@@ -19,18 +26,29 @@ namespace Temtris
         MinoFactory factory;
         Input keyboard;
         double elapsedTime = 0.0;
-        double fallRate = 500.0;
+        double fallRate = 1000.0;
         bool isRunning = false;
         double fallRateMod = 1.0;
 
         // Runs once when the game is started
-        protected override void OnStart()
+        protected override void OnStart(Difficulty d)
         {
             isRunning = true;
             matrix = new Matrix();
-            factory = new MinoFactory();
             keyboard = new Input();
             matrix.active_Tetra = factory.Next();
+            switch (d)
+            {
+                case Difficulty.Menu:
+                    factory = new Menu_MinoFactory();
+                    break;
+                case Difficulty.Easy:
+                    factory = new Easy_MinoFactory();
+                    break;
+                case Difficulty.Hard:
+                    factory = new Hard_MinoFactory();
+                    break;
+            }
         }
 
         // Runs on every loop of the game engine.
@@ -45,7 +63,7 @@ namespace Temtris
                 DropTetra();
                 RowClear();
             }
-
+            matrix.score += elapsedTimeMs;
             // act on user input / non timed updates
             ProcessUserInput();
             return isRunning;
@@ -91,7 +109,22 @@ namespace Temtris
         // Rotates matrix.active_Tetra 90 degrees clockwise.
         private void RotateTetrimino()
         {
-            //TODO: Implement
+            double xC = 0.0;
+            double yC = 0.0;
+            // calculate center
+            foreach (Mino m in matrix.active_Tetra)
+            {
+                xC += m.x;
+                yC += m.y;
+            }
+            xC /= matrix.inactive_Tetra.Count;
+            yC /= matrix.inactive_Tetra.Count;
+
+            foreach (Mino m in matrix.active_Tetra)
+            {
+                m.x = (int)(yC - m.y + xC);
+                m.y = (int)(m.x - xC + yC);
+            }
         }
 
         // Translates matrix.active_Tetra 1 unit in the given dirction or returns false if this would cause a collision.
@@ -145,7 +178,7 @@ namespace Temtris
                 {
                     return true;
                 }
-                foreach (Mino mi in matrix.inactive_Minos)
+                foreach (Mino mi in matrix.inactive_Tetra)
                 {
                     if (mi.x == m.x && mi.y == m.y)
                     {
@@ -156,20 +189,56 @@ namespace Temtris
             return false;
         }
 
-        // Lowers active_Tetra or gets the next Tetra from factory.
+        // Lowers active_Tetra or gets the next Tetra from factory. Updates fallrate accordingly.
         private void DropTetra()
         {
             if (!TranslateTetrimino(Direction.Down))
             {
-                matrix.inactive_Minos.AddRange(matrix.active_Tetra);
+                matrix.inactive_Tetra.AddRange(matrix.active_Tetra);
+                matrix.active_Tetra = matrix.preview_Tetra;
                 matrix.active_Tetra = factory.Next();
+                fallRate = factory.NextFallRate(fallRate);
             }
         }
 
-        // Checks for and performs row clears. Updates fallrate accordingly.
+        // Checks for and performs row clears. Updates score accordingly.
         private void RowClear()
         {
-            //TODO: Implement
+            int clearCount = 0;
+            int[] tally = new int[20];
+            foreach(Mino m in matrix.inactive_Tetra)
+            {
+                tally[m.y]++;
+            }
+            foreach(int i in tally)
+            {
+                if (i == 10)
+                {
+                    clearCount++;
+                    RemoveRowAndShift(i);
+                }
+            }
+            matrix.score += clearCount * 10000;
+            if (clearCount == 4)
+            {
+                matrix.score += 35000;
+            }
+
+        }
+
+        private void RemoveRowAndShift(int row)
+        {
+            foreach (Mino m in matrix.inactive_Tetra)
+            {
+                if (m.y == row)
+                {
+                    matrix.inactive_Tetra.Remove(m);
+                }
+                else if (m.y < row)
+                {
+                    m.y++;
+                }
+            }
         }
     }
 }
