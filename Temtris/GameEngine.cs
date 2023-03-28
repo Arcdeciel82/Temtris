@@ -12,11 +12,11 @@ namespace Temtris
         double timeSinceUIUpdate = 0.0;
 
         // Starts the game Engine
-        public GameEngine Start(BackgroundWorker w)
+        public GameEngine Start(BackgroundWorker w, Difficulty d = Difficulty.Easy)
         {
             worker = w;
             time.Start();
-            OnStart();
+            OnStart(d);
             double ElapsedTime = time.Elapsed.TotalMilliseconds;
             bool isRunning = true;
             while (isRunning && !w.CancellationPending)
@@ -41,7 +41,7 @@ namespace Temtris
         }
 
         // Runs once after Start()
-        protected abstract void OnStart();
+        protected abstract void OnStart(Difficulty d);
 
         // Runs on each game loop. Game loop exits if OnUpdate returns false.
         protected abstract bool OnUpdate(double elapsedTimeMs);
