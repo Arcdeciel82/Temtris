@@ -1,15 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Windows.Media;
 
 namespace Temtris
 {
-    enum Color
-    {
-        Red,
-        Green,
-        Blue,
-        Pink,
-    }
-
     // Represents a single block in the matrix
     class Mino
     {
