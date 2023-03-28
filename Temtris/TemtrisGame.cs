@@ -1,9 +1,7 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media.Media3D;
 
 namespace Temtris
 {
@@ -36,7 +34,6 @@ namespace Temtris
             isRunning = true;
             matrix = new Matrix();
             keyboard = new Input();
-            matrix.active_Tetra = factory.Next();
             switch (d)
             {
                 case Difficulty.Menu:
@@ -49,6 +46,8 @@ namespace Temtris
                     factory = new Hard_MinoFactory();
                     break;
             }
+            matrix.active_Tetra = factory.Next();
+            fallRate = factory.NextFallRate(fallRate);
         }
 
         // Runs on every loop of the game engine.
@@ -79,7 +78,8 @@ namespace Temtris
         private void ProcessUserInput()
         {
             // Tell the main thread to do the keyboard update, because apparently that's neccesary.
-            Application.Current.Dispatcher.Invoke(() => {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
                 keyboard.Update();
             });
 
@@ -109,6 +109,12 @@ namespace Temtris
         // Rotates matrix.active_Tetra 90 degrees clockwise.
         private void RotateTetrimino()
         {
+            List<Mino> backup = new List<Mino>();
+            foreach (Mino m in matrix.active_Tetra)
+            {
+                backup.Add(new Mino(m));
+            }
+
             double xC = 0.0;
             double yC = 0.0;
             // calculate center
@@ -117,13 +123,19 @@ namespace Temtris
                 xC += m.x;
                 yC += m.y;
             }
-            xC /= matrix.inactive_Tetra.Count;
-            yC /= matrix.inactive_Tetra.Count;
+            xC /= matrix.active_Tetra.Count;
+            yC /= matrix.active_Tetra.Count;
 
             foreach (Mino m in matrix.active_Tetra)
             {
-                m.x = (int)(yC - m.y + xC);
-                m.y = (int)(m.x - xC + yC);
+                int xO = m.x;
+                int yO = m.y;
+                m.x = (int)Math.Floor(yC - yO + xC);
+                m.y = (int)Math.Floor(xO - xC + yC);
+            }
+            if (MinoCollision())
+            {
+                matrix.active_Tetra = backup;
             }
         }
 
@@ -137,7 +149,7 @@ namespace Temtris
                     x = -1;
                     break;
                 case Direction.Right:
-                    x = 1; 
+                    x = 1;
                     break;
                 case Direction.Up:
                     y = -1;
@@ -206,13 +218,13 @@ namespace Temtris
         {
             int clearCount = 0;
             int[] tally = new int[20];
-            foreach(Mino m in matrix.inactive_Tetra)
+            foreach (Mino m in matrix.inactive_Tetra)
             {
                 tally[m.y]++;
             }
-            foreach(int i in tally)
+            for(int i = 0; i < tally.Length; i++)
             {
-                if (i == 10)
+                if (tally[i] == 10)
                 {
                     clearCount++;
                     RemoveRowAndShift(i);
@@ -228,13 +240,10 @@ namespace Temtris
 
         private void RemoveRowAndShift(int row)
         {
+            matrix.inactive_Tetra.RemoveAll(mino => mino.y == row);
             foreach (Mino m in matrix.inactive_Tetra)
             {
-                if (m.y == row)
-                {
-                    matrix.inactive_Tetra.Remove(m);
-                }
-                else if (m.y < row)
+                if (m.y < row)
                 {
                     m.y++;
                 }

@@ -12,7 +12,7 @@ namespace Temtris
         double timeSinceUIUpdate = 0.0;
 
         // Starts the game Engine
-        public GameEngine Start(BackgroundWorker w, Difficulty d = Difficulty.Easy)
+        public GameEngine Start(BackgroundWorker w, Difficulty d = Difficulty.Menu)
         {
             worker = w;
             time.Start();

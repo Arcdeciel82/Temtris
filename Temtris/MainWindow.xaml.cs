@@ -15,7 +15,7 @@ namespace Temtris
         protected override void OnRender(DrawingContext dc)
         {
             base.OnRender(dc);
-            Color lineColor = (Color)new ColorConverter().ConvertFrom("#121212");
+            Color lineColor = (Color)new ColorConverter().ConvertFrom("#ffffff");
             Pen pen = new Pen(new SolidColorBrush(lineColor), 1);
             double gameAreaX = this.ActualWidth * 0.3;
             double gameAreaY = this.ActualHeight * 0.1;
@@ -122,7 +122,7 @@ namespace Temtris
             }
             gameRects.Clear();
 
-            AddMino(matrix.inactive_Minos);
+            AddMino(matrix.inactive_Tetra);
             AddMino(matrix.active_Tetra);
         }
 

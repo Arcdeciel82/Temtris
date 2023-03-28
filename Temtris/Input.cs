@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Temtris
@@ -42,23 +39,31 @@ namespace Temtris
             {
                 bool pressed = Keyboard.IsKeyDown(entry.Key);
                 KeyState state = entry.Value;
-                if (!pressed && state.isHeld)
+                if (pressed)
                 {
-                    state.isHeld = false;
-                    state.isReleased = true;
-                }
-                else if (pressed && !state.isHeld)
-                {
-                    state.isPressed = true;
+                    if (state.isHeld)
+                    {
+                        state.isPressed = false;
+                    }
+                    else
+                    {
+                        state.isPressed = true;
+                    }
                     state.isHeld = true;
-                }
-                else if (state.isPressed)
-                {
-                    state.isPressed = false;
-                }
-                else if (state.isReleased)
-                {
                     state.isReleased = false;
+                }
+                if (!pressed)
+                {
+                    if (state.isHeld)
+                    {
+                        state.isReleased = true;
+                    }
+                    else
+                    {
+                        state.isReleased = false;
+                    }
+                    state.isHeld = false;
+                    state.isPressed = false;
                 }
             }
         }
