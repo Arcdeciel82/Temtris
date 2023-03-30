@@ -42,6 +42,7 @@ namespace Temtris
         List<Rectangle> gameRects;
         double gameAreaX = 0.0;
         double gameAreaY = 0.0;
+        Difficulty difficulty = Difficulty.Menu;
 
         public MainWindow()
         {
@@ -107,8 +108,7 @@ namespace Temtris
             BackgroundWorker worker = (BackgroundWorker)sender;
             GameEngine game = (GameEngine)e.Argument;
 
-            e.Result = game.Start(worker);
-            e.Cancel = true;
+            e.Result = game.Start(worker, difficulty);
         }
 
         void Game_Update(object sender, ProgressChangedEventArgs e)
@@ -146,6 +146,11 @@ namespace Temtris
 
         void Game_Completed(object sender, RunWorkerCompletedEventArgs e)
         {
+            TemtrisGame game = e.Result as TemtrisGame;
+            if (difficulty == Difficulty.Menu && !game.IsRunning)
+            {
+                InitializeMainMenu();
+            }
             // Transition UI to game completed here
             // TODO: handle gameover
         }
@@ -154,6 +159,7 @@ namespace Temtris
         {
             // Set up UI for a running game here
             // Resize gameCanvas
+            difficulty = Difficulty.Easy;
             gameWorker.CancelAsync();
             gameCanvas = new GridCanvas();
             gameCanvas.Background = Brushes.Black;

@@ -20,13 +20,15 @@ namespace Temtris
     // Handles all of the game logic and updates related to a game of Temtris.
     internal class TemtrisGame : GameEngine
     {
-        Matrix matrix;
-        MinoFactory factory;
-        Input keyboard;
-        double elapsedTime = 0.0;
-        double fallRate = 1000.0;
-        bool isRunning = false;
-        double fallRateMod = 1.0;
+        private Matrix matrix;
+        private MinoFactory factory;
+        private Input keyboard;
+        private Difficulty difficulty;
+        private double elapsedTime = 0.0;
+        private double fallRate = 500.0;
+        private bool isRunning = false;
+        private double fallRateMod = 1.0;
+        public bool IsRunning { get => isRunning; }
 
         // Runs once when the game is started
         protected override void OnStart(Difficulty d)
@@ -34,6 +36,7 @@ namespace Temtris
             isRunning = true;
             matrix = new Matrix();
             keyboard = new Input();
+            difficulty = d;
             switch (d)
             {
                 case Difficulty.Menu:
@@ -47,6 +50,7 @@ namespace Temtris
                     break;
             }
             matrix.active_Tetra = factory.Next();
+            matrix.preview_Tetra = factory.Next();
             fallRate = factory.NextFallRate(fallRate);
         }
 
@@ -65,13 +69,18 @@ namespace Temtris
             matrix.score += elapsedTimeMs;
             // act on user input / non timed updates
             ProcessUserInput();
-            return isRunning;
+            return IsRunning;
         }
 
         // Returns a copy of the Matrix
         public Matrix GetMatrix()
         {
             return new Matrix(matrix);
+        }
+
+        public Difficulty GetDifficulty()
+        {
+            return difficulty;
         }
 
         // Gets input updates and responds to them.
@@ -115,16 +124,8 @@ namespace Temtris
                 backup.Add(new Mino(m));
             }
 
-            double xC = 0.0;
-            double yC = 0.0;
-            // calculate center
-            foreach (Mino m in matrix.active_Tetra)
-            {
-                xC += m.x;
-                yC += m.y;
-            }
-            xC /= matrix.active_Tetra.Count;
-            yC /= matrix.active_Tetra.Count;
+            double xC = matrix.active_Tetra[0].x;
+            double yC = matrix.active_Tetra[0].y;
 
             foreach (Mino m in matrix.active_Tetra)
             {
@@ -208,8 +209,9 @@ namespace Temtris
             {
                 matrix.inactive_Tetra.AddRange(matrix.active_Tetra);
                 matrix.active_Tetra = matrix.preview_Tetra;
-                matrix.active_Tetra = factory.Next();
+                matrix.preview_Tetra = factory.Next();
                 fallRate = factory.NextFallRate(fallRate);
+                isRunning = !MinoCollision();
             }
         }
 
