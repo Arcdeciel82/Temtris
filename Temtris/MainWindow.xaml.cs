@@ -43,6 +43,7 @@ namespace Temtris
     {
         BackgroundWorker gameWorker;
         Canvas gameCanvas;
+        TextBlock scoreBox;
         List<Rectangle> gameRects;
         double gameAreaX = 0.0;
         double gameAreaY = 0.0;
@@ -119,6 +120,10 @@ namespace Temtris
         {
             TemtrisGame game = (TemtrisGame)e.UserState;
             Matrix matrix = game.GetMatrix();
+            if (scoreBox != null)
+            {
+                scoreBox.Text = "Score: " + matrix.score.ToString();
+            }
 
             foreach (Rectangle r in gameRects)
             {
@@ -128,8 +133,11 @@ namespace Temtris
 
             AddMino(matrix.inactive_Tetra);
             AddMino(matrix.active_Tetra);
+            if (difficulty != Difficulty.Menu)
+            {
+                AddPreviewMino(matrix.preview_Tetra);
+            }
         }
-
         private void AddMino(List<Mino> minos)
         {
             foreach (Mino m in minos)
@@ -140,6 +148,23 @@ namespace Temtris
                 rect.Height = (gameCanvas.ActualHeight - gameAreaY) / 20;
                 Canvas.SetLeft(rect, m.x * rect.Width + gameAreaX);
                 Canvas.SetTop(rect, m.y * rect.Height + gameAreaY);
+
+                rect.Fill = new SolidColorBrush(m.color);
+
+                gameRects.Add(rect);
+                gameCanvas.Children.Add(rect);
+            }
+        }
+
+        private void AddPreviewMino(List<Mino> Minos)
+        {
+            foreach (Mino m in Minos)
+            {
+                Rectangle rect = new Rectangle();
+                rect.Width = (gameCanvas.ActualWidth - gameAreaX) / 10;
+                rect.Height = (gameCanvas.ActualHeight - gameAreaY) / 20;
+                Canvas.SetLeft(rect, m.x * rect.Width - 130);
+                Canvas.SetTop(rect, m.y * rect.Height + 100);
 
                 rect.Fill = new SolidColorBrush(m.color);
 
@@ -175,8 +200,24 @@ namespace Temtris
             gameAreaY = gameCanvas.ActualHeight * 0.1;
 
             // TODO: Score
+            scoreBox = new TextBlock();
+            scoreBox.Foreground = Brushes.White;
+            scoreBox.Width = 150;
+            scoreBox.Height = 50;
+            scoreBox.Text = "Score:";
+            Canvas.SetTop(scoreBox, 0);
+            Canvas.SetLeft(scoreBox, 0);
+            gameCanvas.Children.Add(scoreBox);
 
             // TODO: Nextpiece preview
+            TextBlock previewText = new TextBlock();
+            previewText.Foreground = Brushes.White;
+            previewText.Width = 150;
+            previewText.Height = 50;
+            previewText.Text = "Next Tetramino:";
+            Canvas.SetTop(previewText, 50);
+            Canvas.SetLeft(previewText, 0);
+            gameCanvas.Children.Add(previewText);
 
             InitializeWorker();
             gameWorker.RunWorkerAsync(new TemtrisGame());

@@ -35,6 +35,7 @@ namespace Temtris
         {
             active_Tetra.AddRange(copy.active_Tetra);
             inactive_Tetra.AddRange(copy.inactive_Tetra);
+            preview_Tetra.AddRange(copy.preview_Tetra);
             score = copy.score;
         }
     }
