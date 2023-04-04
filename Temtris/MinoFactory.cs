@@ -20,7 +20,7 @@ namespace Temtris
             var colorProp = typeof(Colors).GetProperties(BindingFlags.Static | BindingFlags.Public);
             var minoColors = colorProp.Select(prop => (Color)prop.GetValue(null, null));
             Color minoColor = minoColors.ElementAt(rand.Next() % minoColors.Count());
-            if (minoColor.Equals(Colors.Black))
+            if (minoColor.Equals(Colors.Black) || minoColor.Equals(Colors.Transparent))
             {
                 minoColor = Colors.Pink;
             }
