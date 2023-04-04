@@ -64,7 +64,7 @@ namespace Temtris
 
                 // perform timed updates
                 DropTetra();
-                RowClear();
+                isRunning = !MinoCollision();
             }
             matrix.score += elapsedTimeMs;
             // act on user input / non timed updates
@@ -124,13 +124,16 @@ namespace Temtris
                 backup.Add(new Mino(m));
             }
 
+            // Center of rotation
             double xC = matrix.active_Tetra[0].x;
             double yC = matrix.active_Tetra[0].y;
 
             foreach (Mino m in matrix.active_Tetra)
             {
+                // original location
                 int xO = m.x;
                 int yO = m.y;
+
                 m.x = (int)Math.Floor(yC - yO + xC);
                 m.y = (int)Math.Floor(xO - xC + yC);
             }
@@ -202,7 +205,7 @@ namespace Temtris
             return false;
         }
 
-        // Lowers active_Tetra or gets the next Tetra from factory. Updates fallrate accordingly.
+        // Lowers active_Tetra or gets the next Tetra from factory. Performs row clears and updates fallrate accordingly.
         private void DropTetra()
         {
             if (!TranslateTetrimino(Direction.Down))
@@ -211,7 +214,7 @@ namespace Temtris
                 matrix.active_Tetra = matrix.preview_Tetra;
                 matrix.preview_Tetra = factory.Next();
                 fallRate = factory.NextFallRate(fallRate);
-                isRunning = !MinoCollision();
+                RowClear();
             }
         }
 
@@ -240,6 +243,7 @@ namespace Temtris
 
         }
 
+        // Removes the given row of minos and moves the 
         private void RemoveRowAndShift(int row)
         {
             matrix.inactive_Tetra.RemoveAll(mino => mino.y == row);

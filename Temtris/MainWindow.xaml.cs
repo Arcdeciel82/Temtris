@@ -163,7 +163,9 @@ namespace Temtris
         {
             // Set up UI for a running game here
             // Resize gameCanvas
-            difficulty = Difficulty.Easy;
+
+            // TODO: Difficulty select
+            difficulty = Difficulty.Hard;
             gameWorker.CancelAsync();
             gameCanvas = new GridCanvas();
             gameCanvas.Background = Brushes.Black;
