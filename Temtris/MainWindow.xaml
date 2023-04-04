@@ -6,6 +6,16 @@
         xmlns:local="clr-namespace:Temtris"
         mc:Ignorable="d"
         Closing="Window_Closing"
-        ResizeMode="CanMinimize"
-        Title="Temtris" Height="900" Width="650">
+        WindowStyle="None"
+        WindowState="Maximized"
+        Title="Temtris" Height="1080" Width="1920">
+
+    <Grid x:Name="MainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="480"/>
+            <ColumnDefinition Width="960"/>
+            <ColumnDefinition Width="480"/>
+        </Grid.ColumnDefinitions>
+    </Grid>
+        
 </Window>

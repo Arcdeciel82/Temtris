@@ -43,6 +43,10 @@ namespace Temtris
     {
         BackgroundWorker gameWorker;
         Canvas gameCanvas;
+
+        Canvas leftCanvas;
+        Canvas rightCanvas;
+
         TextBlock scoreBox;
         List<Rectangle> gameRects;
         double gameAreaX = 0.0;
@@ -60,15 +64,31 @@ namespace Temtris
         {
             gameCanvas = new Canvas();
             gameCanvas.Background = Brushes.Black;
-            gameWindow.Content = gameCanvas;
+            //gameWindow.Content = gameCanvas;
+
+            leftCanvas = new Canvas();
+            leftCanvas.Background = Brushes.Black;
+            rightCanvas = new Canvas();
+            rightCanvas.Background = Brushes.Black;
+            Grid.SetRow(leftCanvas, 0);
+            Grid.SetColumn(leftCanvas, 0);
+            Grid.SetRow(rightCanvas, 0);
+            Grid.SetColumn(rightCanvas, 2);
+            MainGrid.Children.Add(leftCanvas);
+            MainGrid.Children.Add(rightCanvas);
 
             Image Logo = new Image();
             Logo.Source = new BitmapImage(new Uri("./Gfx/TemtrisLogo.png", UriKind.Relative));
-            Logo.Width = gameWindow.Width * 0.78;
+            Logo.Width = gameWindow.Width * 0.50;
+            
             Canvas.SetTop(Logo, 0);
-            Canvas.SetLeft(Logo, gameWindow.Width * 0.1);
+            Canvas.SetLeft(Logo, 0);
             Canvas.SetZIndex(Logo, 1);
             gameCanvas.Children.Add(Logo);
+
+            Grid.SetRow(gameCanvas, 0);
+            Grid.SetColumn(gameCanvas, 1);
+            
 
             Button Button_StartGame = new Button();
             Button_StartGame.Content = "Start Game";
@@ -92,6 +112,8 @@ namespace Temtris
             Canvas.SetZIndex(Button_ExitGame, 1);
             gameCanvas.Children.Add(Button_ExitGame);
 
+            MainGrid.Children.Add(gameCanvas);
+            
             InitializeWorker();
             gameWorker.RunWorkerAsync(new TemtrisGame());
         }
@@ -127,9 +149,10 @@ namespace Temtris
 
             foreach (Rectangle r in gameRects)
             {
-                gameCanvas.Children.Remove(r);
+                gameCanvas.Children.Remove(r); //for canvas
             }
             gameRects.Clear();
+            leftCanvas.Children.Clear();
 
             AddMino(matrix.inactive_Tetra);
             AddMino(matrix.active_Tetra);
@@ -144,15 +167,15 @@ namespace Temtris
             {
                 Rectangle rect = new Rectangle();
 
-                rect.Width = (gameCanvas.ActualWidth - gameAreaX) / 10;
-                rect.Height = (gameCanvas.ActualHeight - gameAreaY) / 20;
+                rect.Width = (leftCanvas.ActualWidth - gameAreaX) / 10; //forcanvas
+                rect.Height = (leftCanvas.ActualHeight - gameAreaY) / 20; //forcanvas
                 Canvas.SetLeft(rect, m.x * rect.Width + gameAreaX);
                 Canvas.SetTop(rect, m.y * rect.Height + gameAreaY);
 
                 rect.Fill = new SolidColorBrush(m.color);
 
                 gameRects.Add(rect);
-                gameCanvas.Children.Add(rect);
+                leftCanvas.Children.Add(rect);
             }
         }
 
