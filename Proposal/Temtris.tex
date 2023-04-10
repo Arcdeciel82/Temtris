@@ -213,7 +213,7 @@ These requirements are things we feel make Tetris what it is. Without them the T
 \end{itemize}
 
 \subsection{Use Cases}
-\begin{table}
+\begin{table}[h!]
 \centering
 \begin{tabular}{|c|c|c|c|c|}
 \hline
@@ -227,40 +227,35 @@ Use Case ID & Use Case Name & Primary Actor & Complexity & Priority \\
 \hline
 4 & Rotate tetriminos & Player & Hard & 3\\
 \hline
-
-
 \end{tabular}
 \caption{use case table}
 \label{tab:useCaseIndex}
 \end{table}
-
 
 \begin{itemize}
 \item[Use Case Number:] 1
 \item[Use Case Name:] Start game
 \item[Description:] A player wishes to pass some time by playing Temptris. They start the game and click on the "Start Game" button from the main menu.
 \end{itemize}
-
 \begin{enumerate}
 \item The Player launches the application.
 \item The Player left-clicks on "Start Game" button.
 \item The game screen appears and the game begins.
 \item[Termination Outcome:] A game of Temtris is now running.
 \end{enumerate}
-
 Alternative: A previous game of Temtris has just ended.
 \begin{enumerate}
 \item Player left-clicks on "Play Again" button.
 \item The game screen appears and the game begins..
 \item[Termination Outcome:] A game of Temtris is now running.
 \end{enumerate}
-
+\medskip
+ 
 \begin{itemize}
 \item[Use Case Number:] 2
 \item[Use Case Name:] Move tetriminos left or right
 \item[Description:] A game of Temtris has been started and the player wishes to move the falling piece to the left or right. The player presses the left or right arrow on the keyboard and the active tetrimino moves accordingly.
 \end{itemize}
-
 \begin{enumerate}
 \item The player presses the left arrow key on the keyboard.
 \item The active tetrimino shifts one position to the left.
@@ -268,26 +263,26 @@ Alternative: A previous game of Temtris has just ended.
 \item The active tetrimino shifts one block to the right.
 \item[Termination Outcome:] The player has control over the left and right motion of the active tetrimino.
 \end{enumerate}
+\medskip
 
 \begin{itemize}
 \item[Use Case Number:] 3
 \item[Use Case Name:] Lower tetriminos into position
 \item[Description:] The player is comfortable with the current trajectory of the active tetrimino and wishes to lower it into place. The player presses the down arrow key on the keyboard and the active tetrimino moves down into place.
 \end{itemize}
-
 \begin{enumerate}
 \item The player presses the down arrow key on the keyboard.
 \item The active tetrimino begins to fall faster.
 \item The active tetrimino stops falling when it reaches inactive tetriminos and is set into place.
 \item[Termination Outcome:] The player can speed up the falling of the active tetrimino.
 \end{enumerate}
-
+\medskip
+ 
 \begin{itemize}
 \item[Use Case Number:] 4
 \item[Use Case Name:] Rotate tetriminos
 \item[Description:] The player wishes to rotate a tetrimino and presses the up arrow key on the keyboard. The active tetrimino rotates ninety degrees allowing the player to better control how it falls.
 \end{itemize}
-
 \begin{enumerate}
 \item The player presses the up arrow key on the keyboard.
 \item The active tetrimino rotates 90 degrees clockwise.
@@ -295,37 +290,48 @@ Alternative: A previous game of Temtris has just ended.
 \item The active tetrimino rotates an additional 90 degrees clockwise.
 \item[Termination Outcome:] The player has control over the rotation of the active tetrimino.
 \end{enumerate}
-
-\begin{figure}[ht!]
-\includegraphics[scale=.5]{UseCaseDiagram.png}
-\caption{Use Case Diagram}
-\label{Diagram1}
-\end{figure}
+\medskip
 
 \subsection{Interface Mockups}
-The file got deleted, and I don't have enough time to recreate it until tommorow. 
-"I hate github, I hate this stupid text editor, I hate everything" - Hunter
-Top Section: Main Menu, Middle Section: Settings, Bottom Section: Difficulty Menu
 
+\begin{figure}[h!]
+\includegraphics[scale=0.3]{MainMenu.png}
+\includegraphics[scale=0.3]{GameRunning.png}
+\caption{Temtris at the main menu(left) and during a game(right).}
+\end{figure}
+
+Todo: Tie interface mockups back into use cases and add game ending screen.
 
 \section{Project Timeline}
-Go back to your notes and look up a typical project development life cycle for the Waterfall approach.  How will you follow this life cycle over the remainder of this semester?  This will usually involve a chart showing your proposed timeline, with specific milestones plotted out.  Make sure you have deliverable dates from the course schedule listed, with a plan to meet them (NOTE: these are generally optimistic deadlines).
+\begin{figure}[h!]
+\includegraphics[scale=.45]{Timeline.png}
+\caption{Project Timeline}
+\end{figure}
+
+As with most projects following the waterfall development cycle we wanted to solidify most of the design as early possible. This unfortunately left us with little time to actually implement the project and work out any rough edges in our design. If we had the chance to do this again we would've spent more time early learning WPF before attempting to outline a project using it. 
 
 \section{Project Structure}
-At first, this will be a little empty (it will need to be filled in by the time you turn in your final report).  This is your chance to discuss all of your design decisions (consider this the README's big brother).
+
+The UI exists within the auto generated MainWindow class, which calls upon an instantiation of the TemtrisGame class to handle all of the game logic and keyboard input.
 
 \subsection{UML Outline}
-Show the full structure of your program.  Make sure to keep on updating this section as your project evolves (you often start out with one plan, but end up modifying things as you move along).  As a note, while Dia fails miserably at generating pdfs (probably my fault), I have had much success with png files.  Make sure to wrap your images in a \texttt{figure} environment, and to reference with the \texttt{ref} command.  For example, see Figure \ref{cat2}.
 
-\begin{figure}[ht!]
-includegraphics[scale=1.5]{cat2.jpg}:
-\caption{Your figures should be in the \emph{figure} environment, and have captions.  Should also be of diagrams pertaining to your project, not random internet kittens}
-\label{cat2}
+\begin{figure}[h!]
+\includegraphics[scale=0.35]{TemtrisUML.png}
+\caption{UML Diagram for Temtris}
 \end{figure}
+
+MainWindow: The auto generated class given when starting a WPF project in Visual Studio. This is the home of our UI. Utilizes TemtrisGame to get the layout and position of all.
+GameEngine: This handles some of the more mundane non-Tetris aspects of the game engine.
+TemtrisGame: The main Temtris class. Handles all of the game logic and keyboard input.
+Matrix: A convenient data carrier. Stores all of the data for a given game data for a game of Temtris.
+KeyboardInput: This keeps track of keyboard input and provides easy access to key state.
+MinoFactory: Creates Tetraminos for the Tetris game, and provides updated fallRates. Each difficulty has it's own child class.
 
 
 \subsection{Design Patterns Used}
-Make sure to actually use at least 2 design patterns from this class.  This is not normally part of such documentation, but largely just specific to this class -- I want to see you use the patterns!
+TODO: clean up and explain a bit.
+There's a template pattern in there through GameEngine/TemtrisGame and an abstract factory pattern through MinoFactory.
 
 
 \section{Results}
