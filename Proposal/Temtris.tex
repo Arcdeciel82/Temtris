@@ -295,12 +295,14 @@ Alternative: A previous game of Temtris has just ended.
 \subsection{Interface Mockups}
 
 \begin{figure}[h!]
-\includegraphics[scale=0.3]{MainMenu.png}
-\includegraphics[scale=0.3]{GameRunning.png}
+\includegraphics[scale=0.4]{MainMenu.png}
+\includegraphics[scale=0.4]{GameRunning.png}
 \caption{Temtris at the main menu(left) and during a game(right).}
+\label{fig:uimockups}
 \end{figure}
 
 Todo: Tie interface mockups back into use cases and add game ending screen.
+Figure \ref{fig:uimockups} shows various screenshots from Temtris as the user plays the game.
 
 \section{Project Timeline}
 \begin{figure}[h!]
@@ -319,18 +321,20 @@ The UI exists within the auto generated MainWindow class, which calls upon an in
 \begin{figure}[h!]
 \includegraphics[scale=0.35]{TemtrisUML.png}
 \caption{UML Diagram for Temtris}
+\label{fig:uml}
 \end{figure}
 
-MainWindow: The auto generated class given when starting a WPF project in Visual Studio. This is the home of our UI. Utilizes TemtrisGame to get the layout and position of all.
-GameEngine: This handles some of the more mundane non-Tetris aspects of the game engine.
-TemtrisGame: The main Temtris class. Handles all of the game logic and keyboard input.
-Matrix: A convenient data carrier. Stores all of the data for a given game data for a game of Temtris.
-KeyboardInput: This keeps track of keyboard input and provides easy access to key state.
-MinoFactory: Creates Tetraminos for the Tetris game, and provides updated fallRates. Each difficulty has it's own child class.
+ Figure \ref{fig:uml} shows the breakdown of the class hierarchy for Temtris. \hfill\break
+MainWindow: The auto generated class given when starting a WPF project in Visual Studio. This is the home of our UI. Utilizes TemtrisGame to get the layout and position of all Tetraminos.\hfill\break
+GameEngine: This handles some of the more mundane non-Tetris aspects of the game engine.\hfill\break
+TemtrisGame: The main Temtris class. Handles all of the game logic and keyboard input.\hfill\break
+Matrix: A convenient data carrier. Stores all of the data for a given game data for a game of Temtris.\hfill\break
+KeyboardInput: This keeps track of keyboard input and provides easy access to key state.\hfill\break
+MinoFactory: Creates Tetraminos for the Tetris game, and provides updated fallRates. Each difficulty has it's own child class.\hfill\break
 
 
 \subsection{Design Patterns Used}
-TODO: clean up and explain a bit.
+TODO: clean up and explain a bit more.
 There's a template pattern in there through GameEngine/TemtrisGame and an abstract factory pattern through MinoFactory.
 
 
