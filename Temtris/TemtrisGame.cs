@@ -225,7 +225,8 @@ namespace Temtris
             int[] tally = new int[20];
             foreach (Mino m in matrix.inactive_Tetra)
             {
-                tally[m.y]++;
+                if (m.y >= 0)
+                    tally[m.y]++;
             }
             for(int i = 0; i < tally.Length; i++)
             {

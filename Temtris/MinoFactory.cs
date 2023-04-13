@@ -4,92 +4,12 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace Temtris
 {
     // Handles the creation of polyminos for a game of Temtris
     internal abstract class MinoFactory
-    {
-        protected Random rand = new Random();
-        public abstract List<Mino> Next();
-
-        public abstract double NextFallRate(double fallRate);
-
-        protected virtual Color NextColor()
-        {
-            var colorProp = typeof(Colors).GetProperties(BindingFlags.Static | BindingFlags.Public);
-            var minoColors = colorProp.Select(prop => (Color)prop.GetValue(null, null));
-            Color minoColor = minoColors.ElementAt(rand.Next() % minoColors.Count());
-            if (minoColor.Equals(Colors.Black) || minoColor.Equals(Colors.Transparent))
-            {
-                minoColor = Colors.Pink;
-            }
-            return minoColor;
-        }
-    }
-
-    internal class Menu_MinoFactory : MinoFactory
-    {
-        public override List<Mino> Next()
-        {
-            List<Mino> tetra = new List<Mino>();
-            Color minoColor = NextColor();
-
-            Mino first = new Mino();
-            first.x = rand.Next() % 9;
-            first.y = 0;
-            first.color = minoColor;
-            tetra.Add(first);
-
-            Mino second = new Mino();
-            second.x = first.x + 1;
-            second.y = 0;
-            second.color = minoColor;
-            tetra.Add(second);
-
-
-            return tetra;
-        }
-
-        public override double NextFallRate(double fallRate)
-        {
-            return 25.0;
-        }
-    }
-
-    internal class Easy_MinoFactory : MinoFactory
-    {
-        public override List<Mino> Next()
-        {
-            List<Mino> tetra = new List<Mino>();
-            Color minoColor = NextColor();
-
-            Mino first = new Mino();
-            first.x = rand.Next() % 9;
-            first.y = 0;
-            first.color = minoColor;
-            tetra.Add(first);
-
-            Mino second = new Mino();
-            second.x = first.x + 1;
-            second.y = 0;
-            second.color = minoColor;
-            tetra.Add(second);
-
-
-            return tetra;
-        }
-
-        public override double NextFallRate(double fallRate)
-        {
-            if (fallRate > 250.0)
-                return fallRate -= 5.0;
-            else
-                return fallRate;
-        }
-    }
-
-    internal class Hard_MinoFactory : MinoFactory
     {
         enum shapes
         {
@@ -102,7 +22,8 @@ namespace Temtris
             Z,
         };
 
-        public override List<Mino> Next()
+        protected Random rand = new Random();
+        public virtual List<Mino> Next()
         {
             List<Mino> tetra = new List<Mino>();
             Color minoColor = NextColor();
@@ -180,6 +101,78 @@ namespace Temtris
             tetra.Add(four);
 
             return tetra;
+        }
+
+        public abstract double NextFallRate(double fallRate);
+
+        protected virtual Color NextColor()
+        {
+            var colorProp = typeof(Colors).GetProperties(BindingFlags.Static | BindingFlags.Public);
+            var minoColors = colorProp.Select(prop => (Color)prop.GetValue(null, null));
+            Color minoColor = minoColors.ElementAt(rand.Next() % minoColors.Count());
+            if (minoColor.Equals(Colors.Black) || minoColor.Equals(Colors.Transparent))
+            {
+                minoColor = Colors.Pink;
+            }
+            return minoColor;
+        }
+    }
+
+    internal class Menu_MinoFactory : MinoFactory
+    {
+        public override List<Mino> Next()
+        {
+            List<Mino> tetra = new List<Mino>();
+            Color minoColor = NextColor();
+
+            Mino first = new Mino();
+            first.x = rand.Next() % 9;
+            first.y = 0;
+            first.color = minoColor;
+            tetra.Add(first);
+
+            Mino second = new Mino();
+            second.x = first.x + 1;
+            second.y = 0;
+            second.color = minoColor;
+            tetra.Add(second);
+
+
+            return tetra;
+        }
+
+        public override double NextFallRate(double fallRate)
+        {
+            return 50.0;
+        }
+    }
+
+    internal class Easy_MinoFactory : MinoFactory
+    {
+        public override List<Mino> Next()
+        {
+            return base.Next();
+        }
+
+        public override double NextFallRate(double fallRate)
+        {
+            if (fallRate > 400.0)
+                return fallRate -= 5.0;
+            else
+                return fallRate;
+        }
+    }
+
+    internal class Hard_MinoFactory : MinoFactory
+    {
+        public override List<Mino> Next()
+        {
+            List<Mino> Minos = base.Next();
+
+
+
+
+            return Minos;
         }
         public override double NextFallRate(double fallRate)
         {

@@ -11,6 +11,8 @@ namespace Temtris
         BackgroundWorker worker;
         double timeSinceUIUpdate = 0.0;
 
+        public bool IsCancelled { get; private set; } = false;
+
         // Starts the game Engine
         public GameEngine Start(BackgroundWorker w, Difficulty d = Difficulty.Menu)
         {
@@ -37,6 +39,8 @@ namespace Temtris
                 time.Restart();
             }
             OnStop();
+            if (worker.CancellationPending)
+                IsCancelled = true;
             return this;
         }
 
