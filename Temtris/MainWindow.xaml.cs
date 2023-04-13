@@ -216,8 +216,8 @@ namespace Temtris
         {
             foreach (Mino m in minos)
             {
-                if(m.y >= 0)
-                gameRects[m.x, m.y].Fill = new SolidColorBrush(m.color);
+                if (m.y >= 0)
+                    gameRects[m.x, m.y].Fill = new SolidColorBrush(m.color);
             }
         }
 
@@ -252,11 +252,17 @@ namespace Temtris
                 return;
             if (difficulty == Difficulty.Menu && !game.IsRunning)
             {
-                InitializeMainMenu();
+                InitializeWorker();
+                gameWorker.RunWorkerAsync(new TemtrisGame());
+                return;
             }
+
             InitializeMainMenu();
-            
-            // TODO: handle gameover
+            string messageBoxText = "Score: " + (int)game.GetMatrix().score;
+            string caption = "Game Over!";
+            MessageBoxButton button = MessageBoxButton.OK;
+            MessageBoxImage icon = MessageBoxImage.None;
+            MessageBox.Show(messageBoxText, caption, button, icon);
         }
 
         private void Button_StartGame_Click(object sender, RoutedEventArgs e)
