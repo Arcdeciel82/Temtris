@@ -76,6 +76,7 @@ namespace Temtris
 
             Button Button_StartGame = new Button();
             Button_StartGame.Content = "Start Game";
+            Button_StartGame.FontSize = 28;
             Button_StartGame.Background = Brushes.Green;
             Button_StartGame.Click += Button_StartGame_Click;
             Button_StartGame.Width = gameWindow.Width * 0.25;
@@ -88,6 +89,7 @@ namespace Temtris
             Button Button_ExitGame = new Button();
             Button_ExitGame.Background = Brushes.Red;
             Button_ExitGame.Content = "Exit Game";
+            Button_ExitGame.FontSize = 28;
             Button_ExitGame.Click += (s, e) => { this.Close(); };
             Button_ExitGame.Width = gameWindow.Width * 0.3;
             Button_ExitGame.Height = gameWindow.Height * 0.1;
@@ -96,6 +98,7 @@ namespace Temtris
             Canvas.SetZIndex(Button_ExitGame, 1);
             gameCanvas.Children.Add(Button_ExitGame);
 
+            difficultySelector = Difficulty.Easy;
             Button Button_Difficulty = new Button();
             Button_Difficulty.Background = Brushes.LightGreen;
             Button_Difficulty.Content = "Easy";
@@ -155,9 +158,10 @@ namespace Temtris
             // TODO: Score
             scoreBox = new TextBlock();
             scoreBox.Foreground = Brushes.White;
-            scoreBox.Width = 150;
+            scoreBox.Width = 300;
             scoreBox.Height = 50;
             scoreBox.Text = "Score:";
+            scoreBox.FontSize = 32;
             Canvas.SetTop(scoreBox, 0);
             Canvas.SetLeft(scoreBox, 0);
             gameCanvas.Children.Add(scoreBox);
@@ -167,7 +171,8 @@ namespace Temtris
             previewText.Foreground = Brushes.White;
             previewText.Width = 150;
             previewText.Height = 50;
-            previewText.Text = "Next Tetramino:";
+            previewText.Text = "Next Piece";
+            previewText.FontSize = 32;
             Canvas.SetTop(previewText, 50);
             Canvas.SetLeft(previewText, 0);
             gameCanvas.Children.Add(previewText);
