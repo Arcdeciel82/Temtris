@@ -11,7 +11,7 @@ namespace Temtris
     // Handles the creation of polyminos for a game of Temtris
     internal abstract class MinoFactory
     {
-        enum shapes
+        protected enum shapes
         {
             L,
             J,
@@ -25,10 +25,14 @@ namespace Temtris
         protected Random rand = new Random();
         public virtual List<Mino> Next()
         {
+            shapes minoShape = (shapes)Enum.GetValues(typeof(shapes)).GetValue(rand.Next() % 7);
+            return GetTetra(minoShape);
+        }
+
+        protected List<Mino> GetTetra(shapes s)
+        {
             List<Mino> tetra = new List<Mino>();
             Color minoColor = NextColor();
-            shapes minoShape = (shapes)Enum.GetValues(typeof(shapes)).GetValue(rand.Next() % 7);
-
             Mino one = new Mino();
             one.x = 4;
             one.y = 0;
@@ -37,7 +41,7 @@ namespace Temtris
             Mino three = new Mino(one);
             Mino four = new Mino(one);
 
-            switch (minoShape)
+            switch (s)
             {
                 case shapes.L:
                     {
@@ -151,7 +155,10 @@ namespace Temtris
     {
         public override List<Mino> Next()
         {
-            return base.Next();
+            if (rand.Next() % 100 < 15)
+                return GetTetra(shapes.I);
+            else
+                return base.Next();
         }
 
         public override double NextFallRate(double fallRate)
@@ -165,19 +172,19 @@ namespace Temtris
 
     internal class Hard_MinoFactory : MinoFactory
     {
+        private int minocount = 0;
         public override List<Mino> Next()
         {
             List<Mino> Minos = base.Next();
-
-
-
-
+            minocount++;
             return Minos;
         }
         public override double NextFallRate(double fallRate)
         {
-            if (fallRate > 150.0)
-                return fallRate -= 10.0;
+            if (fallRate > 350.0)
+                return fallRate -= 20.0;
+            else if (minocount > 25)
+                return 300 - (rand.Next() % 200);
             else
                 return fallRate;
         }
