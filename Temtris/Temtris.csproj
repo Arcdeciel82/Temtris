@@ -102,5 +102,8 @@
   <ItemGroup>
     <Resource Include="Gfx\TemtrisLogo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Gfx\WASD.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

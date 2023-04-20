@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -50,6 +51,7 @@ namespace Temtris
         double gameAreaY = 0.0;
         Difficulty difficulty = Difficulty.Menu;
         Difficulty difficultySelector = Difficulty.Easy;
+        Image controls_img;
 
         public MainWindow()
         {
@@ -141,6 +143,15 @@ namespace Temtris
             gameAreaX = gameCanvas.ActualWidth * 0.3;
             gameAreaY = gameCanvas.ActualHeight * 0.1;
 
+            controls_img = new Image();
+            controls_img.Source = new BitmapImage(new Uri("./Gfx/WASD.png", UriKind.Relative));
+            controls_img.Width = gameWindow.Width;
+            controls_img.Name = "controls_img";
+            Canvas.SetTop(controls_img, gameWindow.Height * 0.2);
+            Canvas.SetLeft(controls_img, 0);
+            Canvas.SetZIndex(controls_img, 1);
+            gameCanvas.Children.Add(controls_img);
+
             for (int i = 0; i < 10; i++)
             {
                 for (int j = 0; j < 20; j++)
@@ -155,7 +166,7 @@ namespace Temtris
                 }
             }
 
-            // TODO: Score
+            // Score
             scoreBox = new TextBlock();
             scoreBox.Foreground = Brushes.White;
             scoreBox.Width = 300;
@@ -166,7 +177,7 @@ namespace Temtris
             Canvas.SetLeft(scoreBox, 0);
             gameCanvas.Children.Add(scoreBox);
 
-            // TODO: Nextpiece preview
+            // Nextpiece preview
             TextBlock previewText = new TextBlock();
             previewText.Foreground = Brushes.White;
             previewText.Width = 150;
@@ -216,6 +227,13 @@ namespace Temtris
             AddMino(matrix.inactive_Tetra);
             AddMino(matrix.active_Tetra);
             AddPreviewMino(matrix.preview_Tetra);
+            if (difficulty != Difficulty.Menu && controls_img != null)
+            {
+                double opacity = 1000.0 / matrix.score;
+                controls_img.Opacity = opacity;
+                if (opacity < 0.35)
+                    gameCanvas.Children.Remove(controls_img);
+            }
         }
         private void AddMino(List<Mino> minos)
         {
