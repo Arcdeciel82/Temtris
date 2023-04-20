@@ -151,7 +151,7 @@
 
 \IEEEtitleabstractindextext{%
 \begin{abstract}
-Temtris is a Tetris-like we are developing as part of our CSCI352 class.
+Temtris is a Tetris clone we are developing as part of our CSCI 352 class.
 \end{abstract}
 }
 
@@ -174,10 +174,10 @@ While attempting to brainstorm ideas for our CSCI 352 class, the idea of a Tetri
 Tetris is a classic game that has had a major impact on the gaming community since its debut. Continuing to iterate upon Tetris and bring it back into the community repeatedly will only deepen its legacy. Temtris is a great way to  do this while improving our skills and preparing us for working in teams and on larger projects in the future.
 
 \subsection{Challenges}
-This is the first moderately sized project either of us has attempted. This is also our first real foray into WPF and c\# so there are some growing pains there as well. As for the project itself, I suspect getting the movement and rotations to feel like a proper Tetris game will take much more fine tuning than we have needed to use in the past. Rotating the pieces will likely also pose some sort of challenge.
+This is the first moderately sized project either of us has attempted. This is also our first real foray into WPF and C\# so there are some growing pains there as well. As for the project itself, I suspect getting the movement and rotations to feel like a proper Tetris game will take much more fine tuning than we have needed to use in the past. Rotating the pieces will likely also pose some sort of challenge.
 
 \section{Scope}
-Our initial goal is to implement the following typical parts of a Tetris-like: 
+Our initial goal is to implement the following typical parts of a Tetris game: 
 \begin{itemize}
 \item Implement a main menu.
 \item Have controllable tetriminos (2x1 shapes initially) that fall into place in the matrix. 
@@ -186,7 +186,7 @@ Our initial goal is to implement the following typical parts of a Tetris-like:
 \item Display the next piece to spawn.
 \end{itemize}
 
-For stretch goals, we would like to add the following:
+For stretch goals, we will to add the following:
 \begin{itemize}
 \item Implement all 7 tetrimino variants.
 \item Implement a multiplayer mode. Having at least two clients with a competitive game mode over LAN or just sharing a keyboard.
@@ -295,9 +295,10 @@ Alternative: A previous game of Temtris has just ended.
 \subsection{Interface Mockups}
 
 \begin{figure}[h!]
-\includegraphics[scale=0.4]{MainMenu.png}
-\includegraphics[scale=0.4]{GameRunning.png}
-\caption{Temtris at the main menu(left) and during a game(right).}
+\includegraphics[scale=0.4]{Temtris_Menu.png}
+\includegraphics[scale=0.4]{Temtris_Game.png}
+\includegraphics[scale=1]{Temtris_GameOver.png}
+\caption{Temtris at the main menu(left), during a game(center), and the game over pop-up(right).}
 \label{fig:uimockups}
 \end{figure}
 
@@ -319,7 +320,7 @@ The UI exists within the auto generated MainWindow class, which calls upon an in
 \subsection{UML Outline}
 
 \begin{figure}[h!]
-\includegraphics[scale=0.35]{TemtrisUML.png}
+\includegraphics[scale=0.45]{ClassDiagrams.png}
 \caption{UML Diagram for Temtris}
 \label{fig:uml}
 \end{figure}
