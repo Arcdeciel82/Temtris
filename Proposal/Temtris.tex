@@ -189,10 +189,11 @@ Our initial goal is to implement the following typical parts of a Tetris game:
 For stretch goals, we will to add the following:
 \begin{itemize}
 \item Implement all 7 tetrimino variants.
+\item Ability to swap active tetrimino with the next tetrimino during gameplay.
 \item Implement a multiplayer mode. Having at least two clients with a competitive game mode over LAN or just sharing a keyboard.
 \item Different power-ups may be earned by removing a certain amount of one color from the board. Perhaps board clear (of that color) or maybe have the next five pieces all be 'L' shapes.
 \item Play background music and have sound effects for line clears, player actions, etc.
-\item Have random shapes form and fall into the matrix ( as opposed to the standard Tetris shapes.
+\item Have random shapes form and fall into the matrix. (instead of the standard Tetris shapes)
 \end{itemize}
 
 \subsection{Requirements}
@@ -208,7 +209,7 @@ These requirements are things we feel make Tetris what it is. Without them the T
 
 \subsubsection{Non-Functional}
 \begin{itemize}
-\item Main menu should display controls needed to play the game.
+\item Temtris should display controls needed to play the game.
 \item User interface should be attractive and inviting.
 \end{itemize}
 
@@ -241,12 +242,6 @@ Use Case ID & Use Case Name & Primary Actor & Complexity & Priority \\
 \item The Player launches the application.
 \item The Player left-clicks on "Start Game" button.
 \item The game screen appears and the game begins.
-\item[Termination Outcome:] A game of Temtris is now running.
-\end{enumerate}
-Alternative: A previous game of Temtris has just ended.
-\begin{enumerate}
-\item Player left-clicks on "Play Again" button.
-\item The game screen appears and the game begins..
 \item[Termination Outcome:] A game of Temtris is now running.
 \end{enumerate}
 \medskip
@@ -302,8 +297,7 @@ Alternative: A previous game of Temtris has just ended.
 \label{fig:uimockups}
 \end{figure}
 
-Todo: Tie interface mockups back into use cases and add game ending screen.
-Figure \ref{fig:uimockups} shows various screenshots from Temtris as the user plays the game.
+Figure \ref{fig:uimockups} shows various screenshots from Temtris as the user plays the game. The left image, showing the main menu, allows the user to start a game, as in use case 1, or exit the application. The center image shows the game after a game has started and is where use cases 2, 3, and 4 take place. The image on the right is an example of what is displayed when the player loses the game.
 
 \section{Project Timeline}
 \begin{figure}[h!]
@@ -335,19 +329,16 @@ MinoFactory: Creates Tetraminos for the Tetris game, and provides updated fallRa
 
 
 \subsection{Design Patterns Used}
-TODO: clean up and explain a bit more.
-There's a template pattern in there through GameEngine/TemtrisGame and an abstract factory pattern through MinoFactory.
+The GameEngine/TemtrisGame classes demonstrate the template design pattern. This lets us separate the game engine logic from the Temtris specific logic, and potentially allows for the reuse of the GameEngine class in other projects. 
+
+The MinoFactory and subclasses demonstrate the factory method and strategy design patterns. The NextTetra method creates different types of tetraminos with different frequencies depending on the concrete class used. The NextFallRate method allows the concrete classes to determine how fast the tetraminos fall during gameplay.
 
 
 \section{Results}
-This section will start out a little vague, but it should grow as your project evolves.  With each deliverable you hand in, give me a final summary of where your project stands.  By the end, this should be a reflective section discussing how many of your original goals you managed to attain/how many desired use cases you implemented/how many extra features you added.
+While not as polished as we would've liked, we managed to achieve our initial goals and implement the "all 7 tetrimino variants" stretch goal. All 4 of the use cases described above are also feasible in the current state of Temtris.
 
 \subsection{Future Work}
-Where are you going next with your project?
-For early deliverables, what are your next steps?  (HINT: you will typically want to look back at your timeline and evaluate: did you meet your expected goals?  Are you ahead of schedule?  Did you decide to shift gears and implement a new feature?)
-By the end, what do you plan on doing with this project?  Will you try to sell it?  Set it on fire?  Link to it on your resume and forget it exists?
-
-
+Temtris is in a playable state and will likely not be receiving any further updates outside of this class.
 
 
 \begin{thebibliography}{1}
