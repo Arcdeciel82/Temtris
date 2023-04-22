@@ -216,6 +216,8 @@ namespace Temtris
         {
             TemtrisGame game = (TemtrisGame)e.UserState;
             Matrix matrix = game.GetMatrix();
+            if (game.IsCancelled)
+                return;
             if (scoreBox != null)
             {
                 scoreBox.Text = "Score: " + (int)matrix.score;
