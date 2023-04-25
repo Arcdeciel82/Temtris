@@ -1,4 +1,9 @@
-﻿using System;
+﻿// Curt Lynch
+// CSCI 352
+// 04/25/2023
+// UI for Temtris
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;

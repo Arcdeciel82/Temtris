@@ -1,4 +1,9 @@
-﻿using System.Collections.Generic;
+﻿// Curt Lynch
+// CSCI 352
+// 04/25/2023
+// game data container
+
+using System.Collections.Generic;
 using System.Windows.Media;
 
 namespace Temtris

@@ -1,4 +1,9 @@
-﻿using System;
+﻿// Curt Lynch
+// CSCI 352
+// 04/25/2023
+// classes related to handling different difficulties
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;

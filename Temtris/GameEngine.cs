@@ -1,4 +1,9 @@
-﻿using System.ComponentModel;
+﻿// Curt Lynch
+// CSCI 352
+// 04/25/2023
+// game engine template
+
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 
