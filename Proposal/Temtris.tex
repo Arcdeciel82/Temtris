@@ -289,10 +289,10 @@ Use Case ID & Use Case Name & Primary Actor & Complexity & Priority \\
 
 \subsection{Interface Mockups}
 
-\begin{figure}[h!]
-\includegraphics[scale=0.4]{Temtris_Menu.png}
-\includegraphics[scale=0.4]{Temtris_Game.png}
-\includegraphics[scale=1]{Temtris_GameOver.png}
+\begin{figure}[!h]
+\includegraphics[scale=0.3]{Temtris_Menu.png}
+\includegraphics[scale=0.3]{Temtris_Game.png}
+\includegraphics[scale=.8]{Temtris_GameOver.png}
 \caption{Temtris at the main menu(left), during a game(center), and the game over pop-up(right).}
 \label{fig:uimockups}
 \end{figure}
@@ -300,45 +300,37 @@ Use Case ID & Use Case Name & Primary Actor & Complexity & Priority \\
 Figure \ref{fig:uimockups} shows various screenshots from Temtris as the user plays the game. The left image, showing the main menu, allows the user to start a game, as in use case 1, or exit the application. The center image shows the game after a game has started and is where use cases 2, 3, and 4 take place. The image on the right is an example of what is displayed when the player loses the game.
 
 \section{Project Timeline}
-\begin{figure}[h!]
-\includegraphics[scale=.45]{Timeline.png}
+\begin{figure}[!h]
+\includegraphics[scale=.3]{Timeline.png}
 \caption{Project Timeline}
+\label{fig:timeline}
 \end{figure}
 
-As with most projects following the waterfall development cycle we wanted to solidify most of the design as early possible. This unfortunately left us with little time to actually implement the project and work out any rough edges in our design. If we had the chance to do this again we would've spent more time early learning WPF before attempting to outline a project using it. 
+Figure \ref{fig:timeline} shows the Temtris project timeline. As with most projects following the waterfall development cycle we wanted to solidify most of the design as early possible. This unfortunately left us with little time to actually implement the project and work out any rough edges in our design. If we had the chance to do this again we would've spent more time early learning WPF before attempting to outline a project using it. 
 
 \section{Project Structure}
-
 The UI exists within the auto generated MainWindow class, which calls upon an instantiation of the TemtrisGame class to handle all of the game logic and keyboard input.
 
-\subsection{UML Outline}
-
-\begin{figure}[h!]
-\includegraphics[scale=0.45]{ClassDiagrams.png}
+\begin{figure}[!h]
+\includegraphics[scale=0.4]{ClassDiagrams.png}
 \caption{UML Diagram for Temtris}
 \label{fig:uml}
 \end{figure}
 
- Figure \ref{fig:uml} shows the breakdown of the class hierarchy for Temtris. \hfill\break
-MainWindow: The auto generated class given when starting a WPF project in Visual Studio. This is the home of our UI. Utilizes TemtrisGame to get the layout and position of all Tetraminos.\hfill\break
-GameEngine: This handles some of the more mundane non-Tetris aspects of the game engine.\hfill\break
-TemtrisGame: The main Temtris class. Handles all of the game logic and keyboard input.\hfill\break
-Matrix: A convenient data carrier. Stores all of the data for a given game data for a game of Temtris.\hfill\break
-KeyboardInput: This keeps track of keyboard input and provides easy access to key state.\hfill\break
-MinoFactory: Creates Tetraminos for the Tetris game, and provides updated fallRates. Each difficulty has it's own child class.\hfill\break
-
+\subsection{UML Outline}
+Figure \ref{fig:uml} shows the breakdown of the class hierarchy for Temtris. MainWindow is the auto generated class given when starting a WPF project in Visual Studio. This is the home of our UI and, for our purposes, the entry point of the application. MainWindow utilizes TemtrisGame to get the layout and position of all tetriminos. GameEngine handles some of the more mundane non-Tetris aspects of the game engine, i.e., timekeeping, pushing updates to the UI thread, etc. TemtrisGame handles all of the game logic, i.e., tetrimino movement, row clearing, checking for user input, etc. TemtrisGame also houses the Matrix, MinoFactory, and KeyboardInput objects. KeyboardInput is a simple class that keeps track of user input for TemtrisGame. It gives us a bit more flexibility by allowing us to choose when it gets updated. Matrix is really just a data container for the score and all of the minos. Minofactory and its children are responsible for telling TemtrisGame how fast the tetriminos should fall and generating the tetriminos used.
 
 \subsection{Design Patterns Used}
-The GameEngine/TemtrisGame classes demonstrate the template design pattern. This lets us separate the game engine logic from the Temtris specific logic, and potentially allows for the reuse of the GameEngine class in other projects. 
+The GameEngine and TemtrisGame classes demonstrate the template design pattern. This lets us separate the game engine logic from the Temtris specific logic and potentially allows for the reuse of the GameEngine class in other projects.
 
 The MinoFactory and subclasses demonstrate the factory method and strategy design patterns. The NextTetra method creates different types of tetraminos with different frequencies depending on the concrete class used. The NextFallRate method allows the concrete classes to determine how fast the tetraminos fall during gameplay.
 
 
 \section{Results}
-While not as polished as we would've liked, we managed to achieve our initial goals and implement the "all 7 tetrimino variants" stretch goal. All 4 of the use cases described above are also feasible in the current state of Temtris.
+While not as polished as we would've liked, we managed to achieve our initial goals and implement the "all 7 tetrimino variants" stretch goal. All 4 of the use cases described above are also feasible in the current state of Temtris. 
 
 \subsection{Future Work}
-Temtris is in a playable state and will likely not be receiving any further updates outside of this class.
+Temtris is in a playable state and will likely not be receiving any further updates.
 
 
 \begin{thebibliography}{1}
