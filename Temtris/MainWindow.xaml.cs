@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -47,16 +46,17 @@ namespace Temtris
 
     public partial class MainWindow : Window
     {
-        BackgroundWorker gameWorker;
-        Canvas gameCanvas;
-        TextBlock scoreBox;
-        Rectangle[,] gameRects = new Rectangle[10, 20];
-        List<Rectangle> gamePreviewRects = new List<Rectangle>();
-        double gameAreaX = 0.0;
-        double gameAreaY = 0.0;
-        Difficulty difficulty = Difficulty.Menu;
-        Difficulty difficultySelector = Difficulty.Easy;
-        Image controls_img;
+        private Canvas gameCanvas;
+        private TextBlock scoreBox;
+        private Rectangle[,] gameRects = new Rectangle[10, 20];
+        private List<Rectangle> gamePreviewRects = new List<Rectangle>();
+        private double gameAreaX = 0.0;
+        private double gameAreaY = 0.0;
+        private Difficulty difficulty = Difficulty.Menu;
+        private Difficulty difficultySelector = Difficulty.Easy;
+        private Image controls_img;
+        private GameEngine game;
+
 
         public MainWindow()
         {
@@ -131,14 +131,14 @@ namespace Temtris
                 }
             }
 
-            InitializeWorker();
-            gameWorker.RunWorkerAsync(new TemtrisGame());
+            game = new TemtrisGame();
+            game.StartAsync(difficulty, Game_Update, Game_Completed);
         }
 
         private void InitializeGame()
         {
             // Set up UI for a running game here
-            gameWorker.CancelAsync();
+            game.IsCancelled = true;
 
             // Resize gameCanvas
             gameCanvas = new GridCanvas();
@@ -193,31 +193,11 @@ namespace Temtris
             Canvas.SetLeft(previewText, 0);
             gameCanvas.Children.Add(previewText);
 
-            InitializeWorker();
-            gameWorker.RunWorkerAsync(new TemtrisGame());
+            game = new TemtrisGame();
+            game.StartAsync(difficulty, Game_Update, Game_Completed);
         }
 
-        private void InitializeWorker()
-        {
-            gameWorker = new BackgroundWorker();
-            gameWorker.WorkerReportsProgress = true;
-            gameWorker.WorkerSupportsCancellation = true;
-
-            gameWorker.DoWork += Game_DoWork;
-            gameWorker.ProgressChanged += Game_Update;
-            gameWorker.RunWorkerCompleted += Game_Completed;
-        }
-
-        void Game_DoWork(object sender, DoWorkEventArgs e)
-        {
-            //work for game thread
-            BackgroundWorker worker = (BackgroundWorker)sender;
-            GameEngine game = (GameEngine)e.Argument;
-
-            e.Result = game.Start(worker, difficulty);
-        }
-
-        void Game_Update(object sender, ProgressChangedEventArgs e)
+        private void Game_Update(object sender, ProgressChangedEventArgs e)
         {
             TemtrisGame game = (TemtrisGame)e.UserState;
             Matrix matrix = game.GetMatrix();
@@ -275,15 +255,15 @@ namespace Temtris
             }
         }
 
-        void Game_Completed(object sender, RunWorkerCompletedEventArgs e)
+        private void Game_Completed(object sender, RunWorkerCompletedEventArgs e)
         {
             TemtrisGame game = e.Result as TemtrisGame;
             if (game.IsCancelled)
                 return;
             if (difficulty == Difficulty.Menu && !game.IsRunning)
             {
-                InitializeWorker();
-                gameWorker.RunWorkerAsync(new TemtrisGame());
+                game = new TemtrisGame();
+                game.StartAsync(difficulty, Game_Update, Game_Completed);
                 return;
             }
 
@@ -303,7 +283,7 @@ namespace Temtris
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
-            gameWorker.CancelAsync();
+            game.IsCancelled = true;
         }
 
         private void Button_Difficulty_Click(object sender, EventArgs e)

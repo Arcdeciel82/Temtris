@@ -9,29 +9,51 @@ using System.Threading;
 
 namespace Temtris
 {
-    // Generic gameengine intended to run as a BackgroundWorker
+    // Generic game engine template
     abstract internal class GameEngine
     {
         Stopwatch time = new Stopwatch();
         BackgroundWorker worker;
         double timeSinceUIUpdate = 0.0;
+        Difficulty difficulty;
 
-        public bool IsCancelled { get; private set; } = false;
+        public bool IsCancelled { get; set; } = false;
 
-        // Starts the game Engine
-        public GameEngine Start(BackgroundWorker w, Difficulty d = Difficulty.Menu)
+        // Starts the game Engine (on this thread)
+        public object Start(Difficulty d)
         {
-            worker = w;
             time.Start();
             OnStart(d);
             double ElapsedTime = time.Elapsed.TotalMilliseconds;
             bool isRunning = true;
-            while (isRunning && !w.CancellationPending)
+            while (isRunning)
+            {
+                isRunning = OnUpdate(ElapsedTime);
+
+                // game updates should probably at least be 1ms apart
+                if (ElapsedTime < 1.0)
+                    Thread.Sleep(1);
+
+                ElapsedTime = time.Elapsed.TotalMilliseconds;
+                time.Restart();
+            }
+            return OnStop();
+        }
+
+        private object AsyncLoop(Difficulty d)
+        {
+            time.Start();
+            OnStart(d);
+            double ElapsedTime = time.Elapsed.TotalMilliseconds;
+            bool isRunning = true;
+            while (isRunning && !IsCancelled)
             {
                 isRunning = OnUpdate(ElapsedTime);
                 timeSinceUIUpdate += ElapsedTime;
 
-                Thread.Sleep(1); // gameloop is a bit too fast atm.
+                // game updates should probably at least be 1ms apart
+                if (ElapsedTime < 1.0)
+                    Thread.Sleep(1);
 
                 // Ensure some time has passed since last UI update. 5ms/Update = 200fps max should be fine.
                 if (timeSinceUIUpdate > 5.0)
@@ -43,10 +65,34 @@ namespace Temtris
                 ElapsedTime = time.Elapsed.TotalMilliseconds;
                 time.Restart();
             }
-            OnStop();
-            if (worker.CancellationPending)
-                IsCancelled = true;
-            return this;
+
+            if (IsCancelled)
+            {
+                worker.CancelAsync();
+            }
+
+            return OnStop();
+        }
+
+        public void StartAsync(Difficulty d, ProgressChangedEventHandler update, RunWorkerCompletedEventHandler completed)
+        {
+            difficulty = d;
+
+            worker = new BackgroundWorker();
+            worker.WorkerReportsProgress = true;
+            worker.WorkerSupportsCancellation = true;
+
+            worker.DoWork += WorkerDoWork;
+            worker.ProgressChanged += update;
+            worker.RunWorkerCompleted += completed;
+
+            worker.RunWorkerAsync();
+        }
+
+        private void WorkerDoWork(object sender, DoWorkEventArgs e)
+        {
+            worker = (BackgroundWorker)sender;
+            e.Result = AsyncLoop(difficulty);
         }
 
         // Runs once after Start()
@@ -56,6 +102,6 @@ namespace Temtris
         protected abstract bool OnUpdate(double elapsedTimeMs);
 
         // Runs once after the Game loop exits.
-        protected virtual void OnStop() { }
+        protected virtual object OnStop() { return this; }
     }
 }
