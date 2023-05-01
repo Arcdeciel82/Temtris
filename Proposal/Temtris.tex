@@ -174,7 +174,7 @@ While attempting to brainstorm ideas for our CSCI 352 class, the idea of a Tetri
 Tetris is a classic game that has had a major impact on the gaming community since its debut. Continuing to iterate upon Tetris and bring it back into the community repeatedly will only deepen its legacy. Temtris is a great way to  do this while improving our skills and preparing us for working in teams and on larger projects in the future.
 
 \subsection{Challenges}
-This is the first moderately sized project either of us has attempted. This is also our first real foray into WPF and C\# so there are some growing pains there as well. As for the project itself, I suspect getting the movement and rotations to feel like a proper Tetris game will take much more fine tuning than we have needed to use in the past. Rotating the pieces will likely also pose some sort of challenge.
+This is the first moderately sized project either of us has attempted. This is also our first real foray into WPF and C\# so there are some growing pains there as well. As for the project itself, we suspect getting the movement and rotations to feel like a proper Tetris game will take much more fine tuning than we have needed to use in the past. Rotating the pieces will likely also pose some sort of challenge.
 
 \section{Scope}
 Our initial goal is to implement the following typical parts of a Tetris game: 
@@ -297,7 +297,7 @@ Use Case ID & Use Case Name & Primary Actor & Complexity & Priority \\
 \label{fig:uimockups}
 \end{figure}
 
-Figure \ref{fig:uimockups} shows various screenshots from Temtris as the user plays the game. The left image, showing the main menu, allows the user to start a game, as in use case 1, or exit the application. The center image shows the game after a game has started and is where use cases 2, 3, and 4 take place. The image on the right is an example of what is displayed when the player loses the game.
+Figure \ref{fig:uimockups} shows various screenshots from Temtris as the user plays the game. The left image, showing the main menu, allows the user to start a game, as in use case 1, or exit the application. The center image shows the game after a game has started and is where use cases 2, 3, and 4 take place. The image on the right is an example of what is displayed when the player finishes a game.
 
 \section{Project Timeline}
 \begin{figure}[!h]
@@ -318,7 +318,7 @@ The UI exists within the auto generated MainWindow class, which calls upon an in
 \end{figure}
 
 \subsection{UML Outline}
-Figure \ref{fig:uml} shows the breakdown of the class hierarchy for Temtris. MainWindow is the auto generated class given when starting a WPF project in Visual Studio. This is the home of our UI and, for our purposes, the entry point of the application. MainWindow utilizes TemtrisGame to get the layout and position of all tetriminos. GameEngine handles some of the more mundane non-Tetris aspects of the game engine, i.e., timekeeping, pushing updates to the UI thread, etc. TemtrisGame handles all of the game logic, i.e., tetrimino movement, row clearing, checking for user input, etc. TemtrisGame also houses the Matrix, MinoFactory, and KeyboardInput objects. KeyboardInput is a simple class that keeps track of user input for TemtrisGame. It gives us a bit more flexibility by allowing us to choose when it gets updated. Matrix is really just a data container for the score and all of the minos. Minofactory and its children are responsible for telling TemtrisGame how fast the tetriminos should fall and generating the tetriminos used.
+Figure \ref{fig:uml} shows the breakdown of the class hierarchy for Temtris. MainWindow is the auto generated class given when starting a WPF project in Visual Studio. This is the home of our UI and, for our purposes, the entry point of the application. MainWindow utilizes TemtrisGame to get the layout and position of all tetriminos. GameEngine handles some of the more mundane non-Tetris aspects of the game engine, i.e., timekeeping, pushing updates to the UI, etc. TemtrisGame handles all of the game logic, i.e., tetrimino movement, row clearing, checking for user input, etc. TemtrisGame also houses the Matrix, MinoFactory, and KeyboardInput objects. Input is a simple class that keeps track of user input for TemtrisGame. It gives us a bit more flexibility by allowing us to choose when it gets updated. Matrix is really just a data container for the score and all of the minos. Minofactory and its children are responsible for telling TemtrisGame how fast the tetriminos should fall and generating the tetriminos used.
 
 \subsection{Design Patterns Used}
 The GameEngine and TemtrisGame classes demonstrate the template design pattern. This lets us separate the game engine logic from the Temtris specific logic and potentially allows for the reuse of the GameEngine class in other projects.
@@ -327,7 +327,7 @@ The MinoFactory and subclasses demonstrate the factory method and strategy desig
 
 
 \section{Results}
-While not as polished as we would've liked, we managed to achieve our initial goals and implement the "all 7 tetrimino variants" stretch goal. All 4 of the use cases described above are also feasible in the current state of Temtris. 
+While not as polished as we would've liked, we managed to achieve our initial goals and implement the "all 7 tetrimino variants" stretch goal. All 4 of the use cases described above are also feasible in the current state of Temtris.
 
 \subsection{Future Work}
 Temtris is in a playable state and will likely not be receiving any further updates.
