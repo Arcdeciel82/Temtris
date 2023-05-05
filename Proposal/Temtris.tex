@@ -147,11 +147,11 @@
 
 % received ..."  text while in non-compsoc journals this is reversed. Sigh.
 
-\author{Curt Lynch and Hunter Johnson}
+\author{Curt Lynch}
 
 \IEEEtitleabstractindextext{%
 \begin{abstract}
-Temtris is a Tetris clone we are developing as part of our CSCI 352 class.
+Temtris is a Tetris clone I developed as part of my CSCI 352 class at the University of Tennessee at Martin. The goal of developing Temtris was to work on a larger project with a partner in order to gain valuable experience working with other people. It was also fun to be able to execute on a project from start to finish that was our own.
 \end{abstract}
 }
 
@@ -163,7 +163,7 @@ Temtris is a Tetris clone we are developing as part of our CSCI 352 class.
 \IEEEpeerreviewmaketitle
 
 \section{Introduction}
-Temtris is a WPF clone of Tetris with our own spin added in. Tetris, is a game where 4 block section shapes fall from top down and you try to fit rows of these blocks together at an ever increasing pace until the screen inevitably fills causing game over. A score is computed based on how efficiently you clear the board as the game progresses, with more points being awarded for streaks of row clears and tetris row clears (4 simultaneous row clears). Our target audience is anyone looking to pass time with a casual game of Tetris. We are making Temtris as a duo as part of our CSCI 352 class. That being the case, we still want Temtris to be a fun and interesting game for anyone looking to play.
+Temtris is a clone of Tetris made with C\# and WPF. Tetris, is a game where 4 block section shapes fall from top down and you try to fit rows of these blocks together at an ever increasing pace until the screen inevitably fills causing game over. A score is computed based on how efficiently you clear the board as the game progresses, with more points being awarded for streaks of row clears and Tetris row clears (4 simultaneous row clears). Our target audience is anyone looking to pass time with a casual game of Tetris. Temtris is being developed as a class project, however I still want Temtris to be a fun and interesting game for anyone.
 
 \subsection{Background}
 A Tetrimino is one of the 7 classic Tetris shapes; these include the O, I, T, L, J, S, and Z shapes. Each Tetrimino is made up of four squares called minos. The matrix is the space where the Tetris game is played. A 'line clear' happens when a horizontal row is completely filled, causing it to be removed from the matrix. Lock-down is when a Tetrimino is locked into its current position and is no longer controllable.
@@ -174,10 +174,12 @@ While attempting to brainstorm ideas for our CSCI 352 class, the idea of a Tetri
 Tetris is a classic game that has had a major impact on the gaming community since its debut. Continuing to iterate upon Tetris and bring it back into the community repeatedly will only deepen its legacy. Temtris is a great way to  do this while improving our skills and preparing us for working in teams and on larger projects in the future.
 
 \subsection{Challenges}
-This is the first moderately sized project either of us has attempted. This is also our first real foray into WPF and C\# so there are some growing pains there as well. As for the project itself, we suspect getting the movement and rotations to feel like a proper Tetris game will take much more fine tuning than we have needed to use in the past. Rotating the pieces will likely also pose some sort of challenge.
+The first real challenge was getting the UI elements in WPF to update in time with the game. WPF is not as suited to real-time updates as I would've liked and as such, it was necessary to run the game on a separate thread from the UI. This was the first time I've had to share data across multiple threads and getting this part working correctly took a bit of trial and error. It was also the first time I needed to really deviate from the planned UML.
+
+The only other real issue I ran into was getting the input to work how I wanted. System.Window.Input exposes the current state of the keyboard, but I quickly found out I really needed to keep track of the previous state of the input and linking the updates to the game updates somehow. This led to the creation of a separate class just for handling keyboard input.
 
 \section{Scope}
-Our initial goal is to implement the following typical parts of a Tetris game: 
+The initial goal is to implement the following typical parts of a Tetris game: 
 \begin{itemize}
 \item Implement a main menu.
 \item Have controllable tetriminos (2x1 shapes initially) that fall into place in the matrix. 
@@ -186,7 +188,7 @@ Our initial goal is to implement the following typical parts of a Tetris game:
 \item Display the next piece to spawn.
 \end{itemize}
 
-For stretch goals, we will to add the following:
+As stretch goals, the following features can be implemented:
 \begin{itemize}
 \item Implement all 7 tetrimino variants.
 \item Ability to swap active tetrimino with the next tetrimino during gameplay.
@@ -197,7 +199,7 @@ For stretch goals, we will to add the following:
 \end{itemize}
 
 \subsection{Requirements}
-These requirements are things we feel make Tetris what it is. Without them the Temtris would ultimately not be a Tetris clone.
+These requirements are things we feel make Tetris what it is. Without them Temtris would ultimately not be a Tetris clone.
 
 \subsubsection{Functional}
 \begin{itemize}
@@ -209,7 +211,7 @@ These requirements are things we feel make Tetris what it is. Without them the T
 
 \subsubsection{Non-Functional}
 \begin{itemize}
-\item Temtris should display controls needed to play the game.
+\item Controls should be intuitive and obvious.
 \item User interface should be attractive and inviting.
 \end{itemize}
 
@@ -236,7 +238,7 @@ Use Case ID & Use Case Name & Primary Actor & Complexity & Priority \\
 \begin{itemize}
 \item[Use Case Number:] 1
 \item[Use Case Name:] Start game
-\item[Description:] A player wishes to pass some time by playing Temptris. They start the game and click on the "Start Game" button from the main menu.
+\item[Description:] A player wishes to pass some time by playing Temtris. They start the game and click on the "Start Game" button from the main menu.
 \end{itemize}
 \begin{enumerate}
 \item The Player launches the application.
@@ -287,9 +289,10 @@ Use Case ID & Use Case Name & Primary Actor & Complexity & Priority \\
 \end{enumerate}
 \medskip
 
-\subsection{Interface Mockups}
+\subsection{Interface}
 
 \begin{figure}[!h]
+\centering
 \includegraphics[scale=0.3]{Temtris_Menu.png}
 \includegraphics[scale=0.3]{Temtris_Game.png}
 \includegraphics[scale=.8]{Temtris_GameOver.png}
@@ -297,21 +300,23 @@ Use Case ID & Use Case Name & Primary Actor & Complexity & Priority \\
 \label{fig:uimockups}
 \end{figure}
 
-Figure \ref{fig:uimockups} shows various screenshots from Temtris as the user plays the game. The left image, showing the main menu, allows the user to start a game, as in use case 1, or exit the application. The center image shows the game after a game has started and is where use cases 2, 3, and 4 take place. The image on the right is an example of what is displayed when the player finishes a game.
+Figure \ref{fig:uimockups} shows various screenshots from Temtris as the user plays the game. The left image, showing the main menu, allows the user to start a game, as in use case 1, or exit the application. The center image shows the game after a game has started and is where use cases 2, 3, and 4 take place. It also shows how the controls are displayed when starting a game. The image on the right is an example of what is displayed when the player finishes a game.
 
 \section{Project Timeline}
 \begin{figure}[!h]
-\includegraphics[scale=.3]{Timeline.png}
+\centering
+\includegraphics[scale=.45]{Timeline.png}
 \caption{Project Timeline}
 \label{fig:timeline}
 \end{figure}
 
-Figure \ref{fig:timeline} shows the Temtris project timeline. As with most projects following the waterfall development cycle we wanted to solidify most of the design as early possible. This unfortunately left us with little time to actually implement the project and work out any rough edges in our design. If we had the chance to do this again we would've spent more time early learning WPF before attempting to outline a project using it. 
+Figure \ref{fig:timeline} shows the Temtris project timeline. As with most projects following the waterfall development cycle we wanted to solidify most of the design as early possible. This unfortunately left us with little time to actually implement the project and work out any rough edges in our design. If I had the chance to do this again I would've spent more time early getting used to WPF before attempting to outline a project using it. 
 
 \section{Project Structure}
 The UI exists within the auto generated MainWindow class, which calls upon an instantiation of the TemtrisGame class to handle all of the game logic and keyboard input.
 
 \begin{figure}[!h]
+\centering
 \includegraphics[scale=0.4]{ClassDiagrams.png}
 \caption{UML Diagram for Temtris}
 \label{fig:uml}
@@ -327,42 +332,10 @@ The MinoFactory and subclasses demonstrate the factory method and strategy desig
 
 
 \section{Results}
-While not as polished as we would've liked, we managed to achieve our initial goals and implement the "all 7 tetrimino variants" stretch goal. All 4 of the use cases described above are also feasible in the current state of Temtris.
+While not as polished as I would've liked. The initial goals and the "all 7 tetrimino variants" stretch goal were completed. All four use cases described above are also feasible in the current state of Temtris.
 
 \subsection{Future Work}
 It would be nice to say we will continue to work on Temtris and implement all of the stretch goals over the summer. There's much more to learn from continuing to work on the project, and maybe some of the code will be reused in a future project, but Temtris is in a playable state and will likely not receive any further updates.
-
-
-\begin{thebibliography}{1}
-
-\bibitem{IEEEhowto:kopka}
-H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
-  0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
-
-\end{thebibliography}
-
-
-
-\begin{IEEEbiography}{Michael Shell}
-Biography text here.
-\end{IEEEbiography}
-
-% if you will not have a photo at all:
-\begin{IEEEbiographynophoto}{John Doe}
-Biography text here.
-\end{IEEEbiographynophoto}
-
-% insert where needed to balance the two columns on the last page with
-% biographies
-%\newpage
-
-\begin{IEEEbiographynophoto}{Jane Doe}
-Biography text here.
-\end{IEEEbiographynophoto}
-
-
-
-
 
 % that's all folks
 \end{document}
